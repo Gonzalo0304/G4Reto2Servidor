@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entitys;
+package entities;
 
+import entities.Administrador;
+import entities.Tienda;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entitys;
+package entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Gonzalo
  */
+
 @Entity
 @Table(name = "producto", schema = "marketmaker")
 public class Producto implements Serializable {
