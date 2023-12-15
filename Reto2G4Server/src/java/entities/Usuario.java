@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entitys;
+package entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -33,6 +33,7 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
 public class Usuario implements Serializable {
+//Hola
 
     private static final long serialVersionUID = 1L;
     @Id
