@@ -5,6 +5,8 @@
  */
 package entities;
 
+import entities.Administrador;
+import entities.Tienda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
