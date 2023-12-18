@@ -6,12 +6,18 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,8 +40,10 @@ public class Producto implements Serializable {
     private double peso;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechacreacion;
-    //@ManyToOne
-    private Integer idCliente;
+    @ManyToOne
+    private Cliente cliente;
+    @ManyToOne
+    private Tienda tienda;
 
     public Integer getIdProducto() {
         return idProducto;
@@ -85,20 +93,35 @@ public class Producto implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.idProducto);
+        return hash;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        if (!Objects.equals(this.idProducto, other.idProducto)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", precio=" + precio + ", talla=" + talla + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + ", idCliente=" + idCliente + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", precio=" + precio + ", talla=" + talla + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + ", cliente=" + cliente + ", tienda=" + tienda + '}';
     }
-    
-    
     
     
 }

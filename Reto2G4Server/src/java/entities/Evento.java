@@ -19,14 +19,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author inigo
  */
 @Entity
+@Table(name = "Evento", schema = "marketMaker")
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,9 +41,12 @@ public class Evento implements Serializable {
     private double totalRecaudado;
     private int numParticipantes;
 
-    @ManyToOne
-    @JoinColumn(name = "administrador_id")
-    private Administrador administrador;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "AdminEvento", schema = "marketMaker")
+    private List<Administrador> administradores = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TiendaEvento> listaTiendasEvento = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -48,9 +55,6 @@ public class Evento implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Tienda> listaTiendas = new ArrayList<>();
 
     public LocalDate getFechaCreacion() {
         return fechaCreacion;
@@ -76,21 +80,24 @@ public class Evento implements Serializable {
         this.numParticipantes = numParticipantes;
     }
 
-    public List getListaTiendas() {
-        return listaTiendas;
+    public List<Administrador> getAdministradores() {
+        return administradores;
     }
 
-    public void setListaTiendas(List listaTiendas) {
-        this.listaTiendas = listaTiendas;
+    public void setAdministradores(List<Administrador> administradores) {
+        this.administradores = administradores;
     }
 
-    public Administrador getAdministrador() {
-        return administrador;
+    public List<TiendaEvento> getListaTiendasEvento() {
+        return listaTiendasEvento;
     }
 
-    public void setAdministrador(Administrador administrador) {
-        this.administrador = administrador;
+    public void setListaTiendasEvento(List<TiendaEvento> listaTiendasEvento) {
+        this.listaTiendasEvento = listaTiendasEvento;
     }
+    
+   
+    
 
     @Override
     public int hashCode() {
