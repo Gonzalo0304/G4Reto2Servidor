@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Stock", schema="marketMaker")
+@XmlRootElement
 public class TiendaEvento implements Serializable {
     @EmbeddedId
     private TiendaEventoId idTienEven;

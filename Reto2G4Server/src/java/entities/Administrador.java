@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,6 +31,8 @@ import javax.persistence.OneToMany;
  * @author inigo
  */
 @Entity
+@DiscriminatorValue("A")
+@XmlRootElement
 public class Administrador extends Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +50,7 @@ public class Administrador extends Usuario implements Serializable {
         this.numEventos = numEventos;
     }
 
+    @XmlTransient
     public List<Evento> getEventosOrganizados() {
         return eventosOrganizados;
     }

@@ -27,6 +27,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +36,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "Tienda", schema = "marketMaker")
+@XmlRootElement
 public class Tienda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -113,6 +116,7 @@ public class Tienda implements Serializable {
         this.cliente = cliente;
     }
 
+    @XmlTransient
     public List<Producto> getProductos() {
         return productos;
     }
@@ -121,6 +125,7 @@ public class Tienda implements Serializable {
         this.productos = productos;
     }
 
+    @XmlTransient
     public List<TiendaEvento> getListaTiendasEvento() {
         return listaTiendasEvento;
     }

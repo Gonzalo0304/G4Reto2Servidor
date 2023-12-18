@@ -18,8 +18,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -30,8 +32,10 @@ import javax.persistence.TemporalType;
  * @author Iñigo
  */
 @Entity
+@Table(name = "Usuario", schema = "marketMaker")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
+@XmlRootElement
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;

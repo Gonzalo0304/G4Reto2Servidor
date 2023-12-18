@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "producto", schema = "marketmaker")
+@XmlRootElement
 public class Producto implements Serializable {
 
     @Id
