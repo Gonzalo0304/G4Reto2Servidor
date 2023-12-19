@@ -48,8 +48,8 @@ public class Evento implements Serializable {
     @JoinTable(name = "AdminEvento", schema = "marketMaker")
     private List<Administrador> administradores = new ArrayList<>();
     
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<TiendaEvento> listaTiendasEvento = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="evento")
+    private List<TiendaEvento> listaTiendasEvento;
 
     public Long getId() {
         return id;

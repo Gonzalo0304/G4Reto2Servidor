@@ -20,18 +20,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author David
  */
 @Entity
-@Table(name="Stock", schema="marketMaker")
+@Table(name="TiendaEvento", schema="marketMaker")
 @XmlRootElement
 public class TiendaEvento implements Serializable {
     @EmbeddedId
     private TiendaEventoId idTienEven;
    // @JsonIgnore
-    @ManyToOne
     @MapsId("idTienda")
-    private Tienda tienda;
     @ManyToOne
+    private Tienda tienda;
+    
    // @JsonIgnore
     @MapsId("idEvento")
+    @ManyToOne
     private Evento evento;
     
     private Date fechaInscripcion;

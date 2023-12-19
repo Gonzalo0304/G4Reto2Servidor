@@ -56,7 +56,7 @@ public class Tienda implements Serializable {
     private Cliente cliente;
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producto> productos = new ArrayList<>();
-    @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="evento")
     private List<TiendaEvento> listaTiendasEvento = new ArrayList<>();
     
 
