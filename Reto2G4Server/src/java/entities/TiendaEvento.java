@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author David
  */
 @Entity
-@Table(name="TiendaEvento", schema="marketMaker")
+@Table(name="Tienda_Evento", schema="marketMaker")
 @XmlRootElement
 public class TiendaEvento implements Serializable {
     @EmbeddedId

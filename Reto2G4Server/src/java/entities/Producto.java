@@ -6,18 +6,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 @Entity
-@Table(name = "producto", schema = "marketmaker")
+@Table(name = "producto", schema = "marketMaker")
 @XmlRootElement
 public class Producto implements Serializable {
 
@@ -36,7 +31,7 @@ public class Producto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProducto;
     private double precio;
-    private String talla;
+    private String altura;
     private String material;
     private double peso;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -63,11 +58,11 @@ public class Producto implements Serializable {
     }
 
     public String getTalla() {
-        return talla;
+        return altura;
     }
 
     public void setTalla(String talla) {
-        this.talla = talla;
+        this.altura = talla;
     }
 
     public String getMaterial() {
@@ -121,7 +116,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", precio=" + precio + ", talla=" + talla + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + ", cliente=" + cliente + ", tienda=" + tienda + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", precio=" + precio + ", talla=" + altura + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + ", cliente=" + cliente + ", tienda=" + tienda + '}';
     }
     
     

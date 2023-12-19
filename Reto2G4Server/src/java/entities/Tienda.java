@@ -19,9 +19,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -56,7 +53,9 @@ public class Tienda implements Serializable {
     private Cliente cliente;
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producto> productos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="evento")
+    
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="tienda")
     private List<TiendaEvento> listaTiendasEvento = new ArrayList<>();
     
 
