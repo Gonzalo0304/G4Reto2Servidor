@@ -39,6 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     ),
     
     @NamedQuery(
+            name="encontrarProductoEntreAltura", query="SELECT p FROM Producto p WHERE altura<=:alturaMin and altura>=:alturaMax"
+    ),
+    
+    @NamedQuery(
             name="encontrarProductoMenorPrecio", query="SELECT p FROM Producto p WHERE precio<:precio"
     ),
     
@@ -47,11 +51,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     ),
     
     @NamedQuery(
+            name="encontrarProductoEntrePrecio", query="SELECT p FROM Producto p WHERE precio<=:precioMin and precio>=:precioMax"
+    ),
+    
+    @NamedQuery(
             name="encontrarProductoMenorPeso", query="SELECT p FROM Producto p WHERE peso<:peso"
     ),
     
     @NamedQuery(
-            name="encontrarProductoMayorPeso", query="SELECT p FROM Producto p WHERE peso<:peso"
+            name="encontrarProductoMayorPeso", query="SELECT p FROM Producto p WHERE peso>:peso"
+    ),
+        @NamedQuery(
+            name="encontrarProductoEntrePeso", query="SELECT p FROM Producto p WHERE peso<=:pesoMin and peso>=:pesoMax"
     )
 })
 @XmlRootElement

@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
             name="encontrarEventoMayorFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion>:fechaInscripcion"
     ),
     
+    @NamedQuery(
+            name="encontrarEventoEntreFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion<=:fechaInscripcionMin and fechaInscripcion>=:fechaInscripcionMax"
+    ),
+    
 })
 @XmlRootElement
 public class TiendaEvento implements Serializable {

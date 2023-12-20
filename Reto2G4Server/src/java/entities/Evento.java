@@ -44,6 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     ),
     
     @NamedQuery(
+            name="encontrarEventoEntreFecha", query="SELECT e FROM Evento e WHERE fechaCreacion<=:fechaCreacionMin and fechaCreacion>=:fechaCreacionMax"
+    ),
+    
+    @NamedQuery(
             name="encontrarEventoMayorNumParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes>:numParticipantes"
     ),
     
@@ -52,11 +56,19 @@ import javax.xml.bind.annotation.XmlTransient;
     ),
     
     @NamedQuery(
+            name="encontrarEventoEntreParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes<=:numParticipantesMin and numParticipantes>=:numParticipantesMax"
+    ),
+    
+    @NamedQuery(
             name="encontrarEventoMayorRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado>:totalRecaudado"
     ),
     
     @NamedQuery(
             name="encontrarEventoMenorRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado<:totalRecaudado"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoEntreRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado<=:totalRecaudadoMin and totalRecaudado>=:totalRecaudadoMax"
     ),
     
 })

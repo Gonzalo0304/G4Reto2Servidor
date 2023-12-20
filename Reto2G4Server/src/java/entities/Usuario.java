@@ -45,11 +45,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     ),
     
     @NamedQuery(
+            name="encontrarUsuarioEntreFechaNac", query="SELECT e FROM Usuario e WHERE fechaNacimiento<=:fechaNacimientoMin and fechaNacimiento>=:fechaNacimientoMax"
+    ),
+    
+    @NamedQuery(
             name="encontrarUsuarioMayorNumEventos", query="SELECT e FROM Usuario e WHERE numEventos>:numEventos"
     ),
     
     @NamedQuery(
             name="encontrarUsuarioMenorNumEventos", query="SELECT e FROM Usuario e WHERE numEventos<:numEventos"
+    ),
+    
+    @NamedQuery(
+            name="encontrarUsuarioEntreNumEventos", query="SELECT e FROM Usuario e WHERE numEventos<=:numEventosMin and numEventos>=:numEventosMax"
     ),
     
     @NamedQuery(

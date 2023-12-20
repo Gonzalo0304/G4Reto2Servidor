@@ -46,11 +46,19 @@ import javax.xml.bind.annotation.XmlTransient;
     ),
     
     @NamedQuery(
+            name="encontrarTiendaEntreEspacio", query="SELECT t FROM Tienda t WHERE espacio<=:espacio and espacio>=:espacio"
+    ),
+    
+    @NamedQuery(
             name="encontrarTiendaAnteriorFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion<:fechaCreacion"
     ),
     
     @NamedQuery(
             name="encontrarTiendaPostiorFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion>:fechaCreacion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarTiendaEntreFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion<=:fechaCreacionMin and fechaCreacion>=:fechaCreacionMax"
     ),
     
     @NamedQuery(
