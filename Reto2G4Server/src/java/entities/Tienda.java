@@ -38,23 +38,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     
     @NamedQuery(
-            name="encontrarTiendaMenorEspacio", query="SELECT * FROM Tienda WHERE espacio<:espacio"
+            name="encontrarTiendaMenorEspacio", query="SELECT t FROM Tienda t WHERE espacio<:espacio"
     ),
     
     @NamedQuery(
-            name="encontrarTiendaMayorEspacio", query="SELECT * FROM Tienda WHERE espacio>:espacio"
+            name="encontrarTiendaMayorEspacio", query="SELECT t FROM Tienda t WHERE espacio>:espacio"
     ),
     
     @NamedQuery(
-            name="encontrarTiendaAnteriorFecha", query="SELECT * FROM Tienda WHERE fechaCreacion<:fechaCreacion"
+            name="encontrarTiendaAnteriorFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion<:fechaCreacion"
     ),
     
     @NamedQuery(
-            name="encontrarTiendaPostiorFecha", query="SELECT * FROM Tienda WHERE fechaCreacion>:fechaCreacion"
+            name="encontrarTiendaPostiorFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion>:fechaCreacion"
     ),
     
     @NamedQuery(
-            name="encontrarTiendaTipoPago", query="SELECT * FROM Tienda WHERE tipoPago=:tipoPago"
+            name="encontrarTiendaTipoPago", query="SELECT t FROM Tienda t WHERE tipoPago=:tipoPago"
     ),
     
 })

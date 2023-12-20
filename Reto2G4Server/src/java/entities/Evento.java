@@ -34,27 +34,27 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     
     @NamedQuery(
-            name="encontrarEventoMenorFecha", query="SELECT * FROM Evento WHERE fechaCreacion<:fechaCreacion"
+            name="encontrarEventoMenorFecha", query="SELECT e FROM Evento e WHERE fechaCreacion<:fechaCreacion"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMayorFecha", query="SELECT * FROM Evento WHERE fechaCreacion>:fechaCreacion"
+            name="encontrarEventoMayorFecha", query="SELECT e FROM Evento e WHERE fechaCreacion>:fechaCreacion"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMayorNumParticipantes", query="SELECT * FROM Evento WHERE numParticipantes>:numParticipantes"
+            name="encontrarEventoMayorNumParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes>:numParticipantes"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMenorNumParticipantes", query="SELECT * FROM Evento WHERE numParticipantes<:numParticipantes"
+            name="encontrarEventoMenorNumParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes<:numParticipantes"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMayorRecaudado", query="SELECT * FROM Evento WHERE totalRecaudado>:totalRecaudado"
+            name="encontrarEventoMayorRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado>:totalRecaudado"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMenorRecaudado", query="SELECT * FROM Evento WHERE totalRecaudado<:totalRecaudado"
+            name="encontrarEventoMenorRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado<:totalRecaudado"
     ),
     
 })

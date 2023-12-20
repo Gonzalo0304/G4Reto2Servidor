@@ -26,11 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     
     @NamedQuery(
-            name="encontrarEventoMenorFechaInscripcion", query="SELECT * FROM TiendaEvento WHERE fechaInscripcion<:fechaInscripcion"
+            name="encontrarEventoMenorFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion<:fechaInscripcion"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMayorFechaInscripcion", query="SELECT * FROM TiendaEvento WHERE fechaInscripcion>:fechaInscripcion"
+            name="encontrarEventoMayorFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion>:fechaInscripcion"
     ),
     
 })

@@ -29,27 +29,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     
     @NamedQuery(
-            name="encontrarProductoMenorAltura", query="SELECT * FROM Producto WHERE altura<:altura"
+            name="encontrarProductoMenorAltura", query="SELECT p FROM Producto p WHERE altura<:altura"
     ),
     
     @NamedQuery(
-            name="encontrarProductoMayorAltura", query="SELECT * FROM Producto WHERE altura>:altura"
+            name="encontrarProductoMayorAltura", query="SELECT p FROM Producto p WHERE altura>:altura"
     ),
     
     @NamedQuery(
-            name="encontrarProductoMenorPrecio", query="SELECT * FROM Producto WHERE precio<:precio"
+            name="encontrarProductoMenorPrecio", query="SELECT p FROM Producto p WHERE precio<:precio"
     ),
     
     @NamedQuery(
-            name="encontrarProductoMayorPrecio", query="SELECT * FROM Producto WHERE precio>:precio"
+            name="encontrarProductoMayorPrecio", query="SELECT p FROM Producto p WHERE precio>:precio"
     ),
     
     @NamedQuery(
-            name="encontrarProductoMenorPeso", query="SELECT * FROM Producto WHERE peso<:peso"
+            name="encontrarProductoMenorPeso", query="SELECT p FROM Producto p WHERE peso<:peso"
     ),
     
     @NamedQuery(
-            name="encontrarProductoMayorPeso", query="SELECT * FROM Producto WHERE peso<:peso"
+            name="encontrarProductoMayorPeso", query="SELECT p FROM Producto p WHERE peso<:peso"
     )
 })
 @XmlRootElement

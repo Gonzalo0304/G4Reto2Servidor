@@ -37,23 +37,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     
     @NamedQuery(
-            name="encontrarEventoMenorFechaNac", query="SELECT * FROM Usuario WHERE fechaNacimiento<:fechaNacimiento"
+            name="encontrarUsuarioMenorFechaNac", query="SELECT e FROM Usuario e WHERE fechaNacimiento<:fechaNacimiento"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMayorFechaNac", query="SELECT * FROM Usuario WHERE fechaCreacion>:fechaCreacion"
+            name="encontrarUsuarioMayorFechaNac", query="SELECT e FROM Usuario e WHERE fechaNacimiento>:fechaNacimiento"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMayorNumEventos", query="SELECT * FROM Usuario WHERE numEventos>:numEventos"
+            name="encontrarUsuarioMayorNumEventos", query="SELECT e FROM Usuario e WHERE numEventos>:numEventos"
     ),
     
     @NamedQuery(
-            name="encontrarEventoMenorNumEventos", query="SELECT * FROM Usuario WHERE numEventos<:numEventos"
+            name="encontrarUsuarioMenorNumEventos", query="SELECT e FROM Usuario e WHERE numEventos<:numEventos"
     ),
     
     @NamedQuery(
-            name="encontrarEventoSegunTipoPago", query="SELECT * FROM Evento WHERE tipoVenta=:tipoVenta"
+            name="encontrarUsuarioSegunTipoVenta", query="SELECT e FROM Evento e WHERE tipoVenta=:tipoVenta"
     ),
     
     
