@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,6 +26,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "producto", schema = "marketMaker")
+@NamedQueries({
+    
+    @NamedQuery(
+            name="encontrarProductoMenorAltura", query="SELECT * FROM Producto WHERE altura<:altura"
+    ),
+    
+    @NamedQuery(
+            name="encontrarProductoMayorAltura", query="SELECT * FROM Producto WHERE altura>:altura"
+    ),
+    
+    @NamedQuery(
+            name="encontrarProductoMenorPrecio", query="SELECT * FROM Producto WHERE precio<:precio"
+    ),
+    
+    @NamedQuery(
+            name="encontrarProductoMayorPrecio", query="SELECT * FROM Producto WHERE precio>:precio"
+    ),
+    
+    @NamedQuery(
+            name="encontrarProductoMenorPeso", query="SELECT * FROM Producto WHERE peso<:peso"
+    ),
+    
+    @NamedQuery(
+            name="encontrarProductoMayorPeso", query="SELECT * FROM Producto WHERE peso<:peso"
+    )
+})
 @XmlRootElement
 public class Producto implements Serializable {
 

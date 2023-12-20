@@ -11,11 +11,11 @@ import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,19 +35,24 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cliente extends Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private String tipoDeVenta;
-
-    @OneToOne(cascade=ALL, fetch=FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name="idUsuario")
+    
+    @Enumerated(EnumType.STRING)
+    private TipoVenta tipoVenta;
+    @OneToOne(cascade=ALL, fetch=FetchType.EAGER)
     private Tienda tienda;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producto> productosCreados;
     
 
     @XmlTransient
+    public TipoVenta getTipoVenta() {
+        return tipoVenta;
+    }
+
+    public void setTipoVenta(TipoVenta tipoVenta) {
+        this.tipoVenta = tipoVenta;
+    }
+
     public Tienda getTienda() {
         return tienda;
     }
@@ -56,10 +61,14 @@ public class Cliente extends Usuario implements Serializable {
         this.tienda = tienda;
     }
 
-    @Override
-    public String toString() {
-        return super.toString()+"Cliente{" + "tipoDeVenta=" + tipoDeVenta + ", tienda=" + tienda + ", productosCreados=" + productosCreados + '}';
+    public List<Producto> getProductosCreados() {
+        return productosCreados;
     }
+
+    public void setProductosCreados(List<Producto> productosCreados) {
+        this.productosCreados = productosCreados;
+    }
+    
     
     
 

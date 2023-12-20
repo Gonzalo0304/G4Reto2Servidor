@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,6 +34,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Usuario", schema = "marketMaker")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
+@NamedQueries({
+    
+    @NamedQuery(
+            name="encontrarEventoMenorFechaNac", query="SELECT * FROM Usuario WHERE fechaNacimiento<:fechaNacimiento"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMayorFechaNac", query="SELECT * FROM Usuario WHERE fechaCreacion>:fechaCreacion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMayorNumEventos", query="SELECT * FROM Usuario WHERE numEventos>:numEventos"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMenorNumEventos", query="SELECT * FROM Usuario WHERE numEventos<:numEventos"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoSegunTipoPago", query="SELECT * FROM Evento WHERE tipoVenta=:tipoVenta"
+    ),
+    
+    
+})
 @XmlRootElement
 public class Usuario implements Serializable {
 
@@ -52,24 +78,12 @@ public class Usuario implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipoUsuario", nullable = false)
-    private TipoUsuario tipo;
-
     public int getIdUsuario() {
         return idUsuario;
     }
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getNombre() {
@@ -80,12 +94,12 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getContraseña() {
+    public String getPassword() {
         return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.password = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCorreo() {
@@ -102,14 +116,6 @@ public class Usuario implements Serializable {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public TipoUsuario getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoUsuario tipo) {
-        this.tipo = tipo;
     }
 
     @Override
@@ -139,7 +145,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "idUsuario=" + idUsuario + ", nombre=" + nombre + ", password=" + password + ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + ", tipo=" + tipo + '}';
+        return "Usuario{" + "idUsuario=" + idUsuario + ", nombre=" + nombre + ", password=" + password + ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + '}';
     }
 
    

@@ -20,6 +20,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,13 +35,36 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Tienda", schema = "marketMaker")
+@NamedQueries({
+    
+    @NamedQuery(
+            name="encontrarTiendaMenorEspacio", query="SELECT * FROM Tienda WHERE espacio<:espacio"
+    ),
+    
+    @NamedQuery(
+            name="encontrarTiendaMayorEspacio", query="SELECT * FROM Tienda WHERE espacio>:espacio"
+    ),
+    
+    @NamedQuery(
+            name="encontrarTiendaAnteriorFecha", query="SELECT * FROM Tienda WHERE fechaCreacion<:fechaCreacion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarTiendaPostiorFecha", query="SELECT * FROM Tienda WHERE fechaCreacion>:fechaCreacion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarTiendaTipoPago", query="SELECT * FROM Tienda WHERE tipoPago=:tipoPago"
+    ),
+    
+})
 @XmlRootElement
 public class Tienda implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idTienda;
+    private int idTienda;
     private String nombre;
     private String descripcion;
     @Enumerated(EnumType.STRING)
@@ -47,14 +72,12 @@ public class Tienda implements Serializable {
     private double espacio;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaCreacion;
-    @OneToOne(cascade=ALL, fetch=FetchType.LAZY)
+    @OneToOne(cascade=ALL, fetch=FetchType.EAGER)
     @MapsId
-    @JoinColumn(name="idUsuario")    
+    @JoinColumn(name="idTienda")    
     private Cliente cliente;
     @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producto> productos = new ArrayList<>();
-    
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy="tienda")
     private List<TiendaEvento> listaTiendasEvento = new ArrayList<>();
     
@@ -132,24 +155,27 @@ public class Tienda implements Serializable {
     public void setListaTiendasEvento(List<TiendaEvento> listaTiendasEvento) {
         this.listaTiendasEvento = listaTiendasEvento;
     }
-    
-
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idTienda != null ? idTienda.hashCode() : 0);
+        int hash = 7;
+        hash = 97 * hash + this.idTienda;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tienda)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Tienda other = (Tienda) object;
-        if ((this.idTienda == null && other.idTienda != null) || (this.idTienda != null && !this.idTienda.equals(other.idTienda))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tienda other = (Tienda) obj;
+        if (this.idTienda != other.idTienda) {
             return false;
         }
         return true;

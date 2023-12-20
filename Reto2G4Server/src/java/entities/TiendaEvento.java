@@ -12,6 +12,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,6 +23,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name="Tienda_Evento", schema="marketMaker")
+@NamedQueries({
+    
+    @NamedQuery(
+            name="encontrarEventoMenorFechaInscripcion", query="SELECT * FROM TiendaEvento WHERE fechaInscripcion<:fechaInscripcion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMayorFechaInscripcion", query="SELECT * FROM TiendaEvento WHERE fechaInscripcion>:fechaInscripcion"
+    ),
+    
+})
 @XmlRootElement
 public class TiendaEvento implements Serializable {
     @EmbeddedId

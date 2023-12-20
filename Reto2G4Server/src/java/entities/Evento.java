@@ -5,10 +5,9 @@
  */
 package entities;
 
-import entities.Administrador;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,8 +17,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -29,37 +31,65 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Evento", schema = "marketMaker")
+@NamedQueries({
+    
+    @NamedQuery(
+            name="encontrarEventoMenorFecha", query="SELECT * FROM Evento WHERE fechaCreacion<:fechaCreacion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMayorFecha", query="SELECT * FROM Evento WHERE fechaCreacion>:fechaCreacion"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMayorNumParticipantes", query="SELECT * FROM Evento WHERE numParticipantes>:numParticipantes"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMenorNumParticipantes", query="SELECT * FROM Evento WHERE numParticipantes<:numParticipantes"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMayorRecaudado", query="SELECT * FROM Evento WHERE totalRecaudado>:totalRecaudado"
+    ),
+    
+    @NamedQuery(
+            name="encontrarEventoMenorRecaudado", query="SELECT * FROM Evento WHERE totalRecaudado<:totalRecaudado"
+    ),
+    
+})
 @XmlRootElement
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idTienda;
-    private LocalDate fechaCreacion;
+    private int idEvento;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaCreacion;
     private double totalRecaudado;
     private int numParticipantes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Admin_Evento", schema = "marketMaker")
     private List<Administrador> administradores = new ArrayList<>();
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="evento")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<TiendaEvento> listaTiendasEvento;
 
-    public int getIdTienda() {
-        return idTienda;
+    public int getIdEvento() {
+        return idEvento;
     }
 
-    public void setIdTienda(int idTienda) {
-        this.idTienda = idTienda;
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
     }
 
-    public LocalDate getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
