@@ -6,7 +6,14 @@
 package service;
 
 import entities.Tienda;
+import entities.TipoPago;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
+import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,66 +33,103 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.tienda")
-public class TiendaFacadeREST extends AbstractFacade<Tienda> {
+public class TiendaFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    @EJB
+    private EJBTiendaInterface ti;
 
     public TiendaFacadeREST() {
-        super(Tienda.class);
+
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Tienda entity) {
-        super.create(entity);
+    public void create(Tienda tienda) throws CreateException {
+        ti.createTienda(tienda);
     }
 
     @PUT
-    @Path("{id}")
+    @Path("edit/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Tienda entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") Integer id, Tienda tienda) throws UpdateException {
+        ti.editTienda(tienda);
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
+        Tienda tienda = ti.encontrarTiendaId(id);
+        ti.deleteTienda(tienda);
     }
 
     @GET
-    @Path("{id}")
+    @Path("find/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Tienda find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Tienda find(@PathParam("id") Integer id) throws ReadException {
+        return ti.encontrarTiendaId(id);
     }
 
     @GET
-    @Override
+    @Path("findAll")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> findAll() {
-        return super.findAll();
+    public List<Tienda> findAll() throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.findAll();
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("encontrarTiendaMenorEspacio/{espacio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    public List<Tienda> encontrarTiendaMenorEspacio(Float espacio) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaMenorEspacio(espacio);
     }
 
     @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
+    @Path("encontrarTiendaMayorEspacio{espacio}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tienda> encontrarTiendaMayorEspacio(Float espacio) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaMayorEspacio(espacio);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    @GET
+    @Path("encontrarTiendaAnteriorFecha/{espacioMin}/{espacioMax}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tienda> encontrarTiendaEntreEspacio(Float espacioMin, Float espacioMax) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaEntreEspacio(espacioMin, espacioMax);
     }
-    
+
+    @GET
+    @Path("encontrarTiendaAnteriorFecha/{fecha}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tienda> encontrarTiendaAnteriorFecha(Date fecha) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaAnteriorFecha(fecha);
+    }
+
+    @GET
+    @Path("encontrarTiendaPosteriorFecha/{fecha}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tienda> encontrarTiendaPosteriorFecha(Date fecha) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaPosteriorFecha(fecha);
+    }
+
+    @GET
+    @Path("encontrarTiendaEntreFecha/{fecha1}/{fecha2}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tienda> encontrarTiendaEntreFecha(Date fechaMin, Date fechaMax) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaEntreFecha(fechaMin, fechaMax);
+    }
+
+    @GET
+    @Path("encontrarTiendaTipoPago/{tipoPago}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tienda> encontrarTiendaTipoPago(TipoPago tipoPago) throws ReadException {
+        List<Tienda> tiendas;
+        return tiendas = ti.encontrarTiendaTipoPago(tipoPago);
+    }
+
 }

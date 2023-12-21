@@ -94,7 +94,7 @@ public class EJBTienda implements EJBTiendaInterface {
     }
 
     @Override
-    public List<Tienda> encontrarTiendaEntreEspacio(Float minEspacio, Float maxEspacio) throws ReadException {
+    public List<Tienda> encontrarTiendaEntreEspacio(Float espacioMin, Float espacioMax) throws ReadException {
         ArrayList<Tienda> tiendas;
         try {
             tiendas = (ArrayList<Tienda>) em.createNamedQuery("Tienda.encontrarTiendaEntreEspacio");
@@ -116,7 +116,7 @@ public class EJBTienda implements EJBTiendaInterface {
     }
 
     @Override
-    public List<Tienda> encontrarTiendaPostiorFecha(Date fecha) throws ReadException {
+    public List<Tienda> encontrarTiendaPosteriorFecha(Date fecha) throws ReadException {
         ArrayList<Tienda> tiendas;
         try {
             tiendas = (ArrayList<Tienda>) em.createNamedQuery("Tienda.encontrarTiendaPostiorFecha");
@@ -127,7 +127,7 @@ public class EJBTienda implements EJBTiendaInterface {
     }
 
     @Override
-    public List<Tienda> encontrarTiendaEntreFecha(Date minFecha, Date maxFecha) throws ReadException {
+    public List<Tienda> encontrarTiendaEntreFecha(Date fechaMin, Date fechaMax) throws ReadException {
         ArrayList<Tienda> tiendas;
         try {
             tiendas = (ArrayList<Tienda>) em.createNamedQuery("Tienda.encontrarTiendaEntreFecha");
@@ -146,6 +146,17 @@ public class EJBTienda implements EJBTiendaInterface {
             throw new ReadException(e.getMessage());
         }
         return tiendas;
+    }
+
+    @Override
+    public Tienda encontrarTiendaId(int id) throws ReadException {
+        Tienda tienda;
+        try {
+            tienda = em.find(Tienda.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return tienda;
     }
 
 }

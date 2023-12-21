@@ -20,27 +20,29 @@ import java.util.List;
  * @author David
  */
 public interface EJBTiendaInterface {
-    
+
     public void createTienda(Tienda tienda) throws CreateException;
-    
+
     public void editTienda(Tienda tienda) throws UpdateException;
-    
+
     public void deleteTienda(Tienda tienda) throws DeleteException;
-    
+
+    public Tienda encontrarTiendaId(int id) throws ReadException;
+
     public List<Tienda> findAll() throws ReadException;
-    
+
     public List<Tienda> encontrarTiendaMenorEspacio(Float espacio) throws ReadException;
-    
+
     public List<Tienda> encontrarTiendaMayorEspacio(Float espacio) throws ReadException;
-    
-    public List<Tienda> encontrarTiendaEntreEspacio(Float minEspacio, Float maxEspacio) throws ReadException;
-    
+
+    public List<Tienda> encontrarTiendaEntreEspacio(Float espacioMin, Float espacioMax) throws ReadException;
+
     public List<Tienda> encontrarTiendaAnteriorFecha(Date fecha) throws ReadException;
-    
-    public List<Tienda> encontrarTiendaPostiorFecha(Date fecha) throws ReadException;
-    
-    public List<Tienda> encontrarTiendaEntreFecha(Date minFecha, Date maxFecha) throws ReadException;
-    
+
+    public List<Tienda> encontrarTiendaPosteriorFecha(Date fecha) throws ReadException;
+
+    public List<Tienda> encontrarTiendaEntreFecha(Date fechaMin, Date fechaMax) throws ReadException;
+
     public List<Tienda> encontrarTiendaTipoPago(TipoPago tipoPago) throws ReadException;
-    
+
 }
