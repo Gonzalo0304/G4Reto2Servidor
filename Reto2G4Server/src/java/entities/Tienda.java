@@ -65,6 +65,10 @@ import javax.xml.bind.annotation.XmlTransient;
             name="encontrarTiendaTipoPago", query="SELECT t FROM Tienda t WHERE tipoPago=:tipoPago"
     ),
     
+    @NamedQuery(
+            name="encontrarTodasTiendas", query="SELECT t FROM Tienda t"
+    )
+    
 })
 @XmlRootElement
 public class Tienda implements Serializable {
