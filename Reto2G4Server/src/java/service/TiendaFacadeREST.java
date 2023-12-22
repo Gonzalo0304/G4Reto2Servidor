@@ -15,8 +15,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -79,7 +77,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaMenorEspacio/{espacio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaMenorEspacio(Float espacio) throws ReadException {
+    public List<Tienda> encontrarTiendaMenorEspacio(@PathParam("espacio") Float espacio) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaMenorEspacio(espacio);
     }
@@ -87,7 +85,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaMayorEspacio{espacio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaMayorEspacio(Float espacio) throws ReadException {
+    public List<Tienda> encontrarTiendaMayorEspacio(@PathParam("espacio") Float espacio) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaMayorEspacio(espacio);
     }
@@ -95,7 +93,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaAnteriorFecha/{espacioMin}/{espacioMax}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaEntreEspacio(Float espacioMin, Float espacioMax) throws ReadException {
+    public List<Tienda> encontrarTiendaEntreEspacio(@PathParam("espacioMin") Float espacioMin, @PathParam("espacioMax") Float espacioMax) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaEntreEspacio(espacioMin, espacioMax);
     }
@@ -103,7 +101,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaAnteriorFecha/{fecha}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaAnteriorFecha(Date fecha) throws ReadException {
+    public List<Tienda> encontrarTiendaAnteriorFecha(@PathParam("fecha") Date fecha) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaAnteriorFecha(fecha);
     }
@@ -111,7 +109,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaPosteriorFecha/{fecha}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaPosteriorFecha(Date fecha) throws ReadException {
+    public List<Tienda> encontrarTiendaPosteriorFecha(@PathParam("fecha") Date fecha) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaPosteriorFecha(fecha);
     }
@@ -119,7 +117,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaEntreFecha/{fecha1}/{fecha2}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaEntreFecha(Date fechaMin, Date fechaMax) throws ReadException {
+    public List<Tienda> encontrarTiendaEntreFecha(@PathParam("fecha1") Date fechaMin, @PathParam("fecha1") Date fechaMax) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaEntreFecha(fechaMin, fechaMax);
     }
@@ -127,7 +125,7 @@ public class TiendaFacadeREST {
     @GET
     @Path("encontrarTiendaTipoPago/{tipoPago}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tienda> encontrarTiendaTipoPago(TipoPago tipoPago) throws ReadException {
+    public List<Tienda> encontrarTiendaTipoPago(@PathParam("tipoPago") TipoPago tipoPago) throws ReadException {
         List<Tienda> tiendas;
         return tiendas = ti.encontrarTiendaTipoPago(tipoPago);
     }

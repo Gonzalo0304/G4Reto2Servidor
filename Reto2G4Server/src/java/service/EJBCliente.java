@@ -5,7 +5,6 @@
  */
 package service;
 
-import entities.Tienda;
 import entities.Cliente;
 import exceptions.CreateException;
 import exceptions.DeleteException;
@@ -141,6 +140,17 @@ public class EJBCliente implements EJBClienteInterface {
             throw new ReadException(e.getMessage());
         }
         return clientes;
+    }
+
+    @Override
+    public Cliente encontrarClienteId(int id) throws ReadException {
+        Cliente cliente;
+        try {
+            cliente = em.find(Cliente.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return cliente;
     }
 
 }

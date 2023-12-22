@@ -6,8 +6,6 @@
 package service;
 
 import entities.Cliente;
-import entities.Tienda;
-import entities.Usuario;
 import exceptions.CreateException;
 import exceptions.DeleteException;
 import exceptions.ReadException;
@@ -25,6 +23,8 @@ public interface EJBClienteInterface {
     public void editCliente(Cliente cliente) throws UpdateException;
 
     public void deleteCliente(Cliente cliente) throws DeleteException;
+
+    public Cliente encontrarClienteId(int id) throws ReadException;
 
     public List<Cliente> findAll() throws ReadException;
 

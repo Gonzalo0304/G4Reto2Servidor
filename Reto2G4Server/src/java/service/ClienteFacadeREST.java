@@ -7,9 +7,10 @@ package service;
 
 import entities.Cliente;
 import entities.Tienda;
+import exceptions.CreateException;
+import exceptions.UpdateException;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,66 +28,53 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.cliente")
-public class ClienteFacadeREST extends AbstractFacade<Cliente> {
+public class ClienteFacadeREST {
 
     @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    private EJBClienteInterface ci;
 
     public ClienteFacadeREST() {
-        super(Cliente.class);
+
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Cliente entity) {
-        super.create(entity);
+    public void create(Cliente cliente) throws CreateException {
+        ci.createCliente(cliente);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Tienda id, Cliente entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") Tienda id, Cliente cliente) throws UpdateException {
+        ci.editCliente(cliente);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Tienda id) {
-        super.remove(super.find(id));
+        Cliente cliente = ci.encontrarClienteId(id);
+        ci.deleteCliente(cliente);
     }
 
     @GET
-    @Path("{id}")
+    @Path("find/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cliente find(@PathParam("id") Tienda id) {
-        return super.find(id);
+        return ci.encontrarClienteId(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cliente> findAll() {
-        return super.findAll();
+
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cliente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+
     }
 
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }

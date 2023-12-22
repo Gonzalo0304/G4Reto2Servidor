@@ -87,5 +87,5 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
