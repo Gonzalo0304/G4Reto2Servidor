@@ -29,6 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "producto", schema = "marketMaker")
 @NamedQueries({
+    @NamedQuery(
+            name="encontrarProductoTodos", query="SELECT p FROM Producto p"
+    ),
     
     @NamedQuery(
             name="encontrarProductoMenorAltura", query="SELECT p FROM Producto p WHERE altura<:altura"
