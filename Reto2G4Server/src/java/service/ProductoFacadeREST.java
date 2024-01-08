@@ -7,9 +7,9 @@ package service;
 
 import entities.Producto;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,66 +26,130 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.producto")
-public class ProductoFacadeREST extends AbstractFacade<Producto> {
+public class ProductoFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    @EJB
+    private EJBProductoInterface ejb;
 
     public ProductoFacadeREST() {
-        super(Producto.class);
+        
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Producto entity) {
-        super.create(entity);
+        ejb.createProducto(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Producto entity) {
-        super.edit(entity);
+        ejb.editProducto(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+        ejb.removeProducto(ejb.findProducto(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Producto find(@PathParam("id") Integer id) {
-        return super.find(id);
+        Producto producto = null;
+        
+        producto=ejb.findProducto(id);
+        
+        return producto;
     }
 
     @GET
-    @Override
+    @Path("findAll")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Producto> findAll() {
-        return super.findAll();
+        List<Producto> productos;
+        
+        return productos=ejb.findAllProducto();
+       
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("encontrarMaxAltura/{altura}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    public List<Producto> findMaxAlturaProducto(Float altura) {
+        List<Producto> productos;
+        return productos = ejb.findMaxAlturaProducto(altura);
     }
-
+    
     @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
+    @Path("encontrarMinAltura/{altura}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findMinAlturaProducto(Float altura) {
+        List<Producto> productos;
+        return productos = ejb.findMinAlturaProducto(altura);
     }
-
-    @Override
+    
+    @GET
+    @Path("encontrarEntreAltura/{altura1}/{altura2}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findEntreAlturaProducto(@PathParam("altura1")Float altura1, @PathParam("altura2")Float altura2) {
+        List<Producto> productos;
+        return productos = ejb.findEntreAlturaProducto(altura1,altura2);
+    }
+    
+    @GET
+    @Path("encontrarMaxPrecio/{precio}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findMaxPrecioProducto(Float precio) {
+        List<Producto> productos;
+        return productos = ejb.findMaxAlturaProducto(precio);
+    }
+    
+    @GET
+    @Path("encontrarMinPrecio/{precio}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findMinPrecioProducto(Float precio) {
+        List<Producto> productos;
+        return productos = ejb.findMinAlturaProducto(precio);
+    }
+    
+    @GET
+    @Path("encontrarEntrePrecio/{precio1}/{precio2}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findEntrePrecioProducto(@PathParam("precio1")Float precio1, @PathParam("precio2")Float precio2) {
+        List<Producto> productos;
+        return productos = ejb.findEntreAlturaProducto(precio1,precio2);
+    }
+    
+    
+    @GET
+    @Path("encontrarMaxPeso/{peso}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findMaxPesoProducto(Float peso) {
+        List<Producto> productos;
+        return productos = ejb.findMaxAlturaProducto(peso);
+    }
+    
+    @GET
+    @Path("encontrarMinPeso/{peso}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findMinPesoProducto(Float peso) {
+        List<Producto> productos;
+        return productos = ejb.findMinAlturaProducto(peso);
+    }
+    
+    @GET
+    @Path("encontrarEntrePso/{peso1}/{peso2}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findEntrePesosProducto(@PathParam("peso1")Float peso1, @PathParam("peso2")Float peso2) {
+        List<Producto> productos;
+        return productos = ejb.findEntreAlturaProducto(peso1,peso2);
+    }      
+    
     protected EntityManager getEntityManager() {
-        return em;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
