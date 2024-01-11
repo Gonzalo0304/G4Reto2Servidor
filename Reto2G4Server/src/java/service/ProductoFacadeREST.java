@@ -6,10 +6,13 @@
 package service;
 
 import entities.Producto;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author David
+ * @author Gonzalo
  */
 @Stateless
 @Path("entities.producto")
@@ -32,124 +35,112 @@ public class ProductoFacadeREST {
     private EJBProductoInterface ejb;
 
     public ProductoFacadeREST() {
-        
+
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Producto entity) {
-        ejb.createProducto(entity);
+    public void create(Producto producto) throws CreateException {
+        ejb.createProducto(producto);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Producto entity) {
-        ejb.editProducto(entity);
+    public void edit(@PathParam("id") Integer id, Producto producto) throws UpdateException {
+        ejb.editProducto(producto);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
         ejb.removeProducto(ejb.findProducto(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Producto find(@PathParam("id") Integer id) {
-        Producto producto = null;
-        
-        producto=ejb.findProducto(id);
-        
-        return producto;
+    public Producto find(@PathParam("id") Integer id) throws ReadException {
+        return ejb.findProducto(id);
+
     }
 
     @GET
-    @Path("findAll")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findAll() {
-        List<Producto> productos;
-        
-        return productos=ejb.findAllProducto();
-       
+    public List<Producto> findAll() throws ReadException {
+        return ejb.findAllProducto();
+
     }
 
     @GET
-    @Path("encontrarMaxAltura/{altura}")
+    @Path("encontrarProductoTodosTienda/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findMaxAlturaProducto(Float altura) {
-        List<Producto> productos;
-        return productos = ejb.findMaxAlturaProducto(altura);
+    public List<Producto> encontrarProductoTodosTienda(@PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.encontrarProductoTodosTienda(idTienda);
+
     }
-    
+
     @GET
-    @Path("encontrarMinAltura/{altura}")
+    @Path("encontrarProductoMayorAltura/{altura}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findMinAlturaProducto(Float altura) {
-        List<Producto> productos;
-        return productos = ejb.findMinAlturaProducto(altura);
+    public List<Producto> findMaxAlturaProducto(@PathParam("altura") int altura, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findMaxAlturaProducto(altura, idTienda);
     }
-    
+
     @GET
-    @Path("encontrarEntreAltura/{altura1}/{altura2}")
+    @Path("encontrarProductoMenorAltura/{altura}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findEntreAlturaProducto(@PathParam("altura1")Float altura1, @PathParam("altura2")Float altura2) {
-        List<Producto> productos;
-        return productos = ejb.findEntreAlturaProducto(altura1,altura2);
+    public List<Producto> findMinAlturaProducto(@PathParam("altura") int altura, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findMinAlturaProducto(altura, idTienda);
     }
-    
+
     @GET
-    @Path("encontrarMaxPrecio/{precio}")
+    @Path("encontrarProductoEntreAltura/{altura1}/{altura2}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findMaxPrecioProducto(Float precio) {
-        List<Producto> productos;
-        return productos = ejb.findMaxAlturaProducto(precio);
+    public List<Producto> findEntreAlturaProducto(@PathParam("altura1") int altura1, @PathParam("altura2") int altura2, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findEntreAlturaProducto(altura1, altura2, idTienda);
     }
-    
+
     @GET
-    @Path("encontrarMinPrecio/{precio}")
+    @Path("encontrarProductoMayorPrecio/{precio}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findMinPrecioProducto(Float precio) {
-        List<Producto> productos;
-        return productos = ejb.findMinAlturaProducto(precio);
+    public List<Producto> encontrarProductoMayorPrecio(@PathParam("precio") Float precio, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findMaxPrecioProducto(precio, idTienda);
     }
-    
+
     @GET
-    @Path("encontrarEntrePrecio/{precio1}/{precio2}")
+    @Path("encontrarProductoMenorPrecio/{precio}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findEntrePrecioProducto(@PathParam("precio1")Float precio1, @PathParam("precio2")Float precio2) {
-        List<Producto> productos;
-        return productos = ejb.findEntreAlturaProducto(precio1,precio2);
+    public List<Producto> encontrarProductoMenorPrecio(@PathParam("precio") Float precio, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findMinPrecioProducto(precio, idTienda);
     }
-    
-    
+
     @GET
-    @Path("encontrarMaxPeso/{peso}")
+    @Path("encontrarProductoEntrePrecio/{precio1}/{precio2}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findMaxPesoProducto(Float peso) {
-        List<Producto> productos;
-        return productos = ejb.findMaxAlturaProducto(peso);
+    public List<Producto> findEntrePrecioProducto(@PathParam("precio1") Float precio1, @PathParam("precio2") Float precio2, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findEntrePrecioProducto(precio1, precio2, idTienda);
     }
-    
+
     @GET
-    @Path("encontrarMinPeso/{peso}")
+    @Path("encontrarProductoMayorPeso/{peso}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findMinPesoProducto(Float peso) {
-        List<Producto> productos;
-        return productos = ejb.findMinAlturaProducto(peso);
+    public List<Producto> findMaxPesoProducto(@PathParam("peso") Float peso, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findMaxPesoProducto(peso, idTienda);
     }
-    
+
     @GET
-    @Path("encontrarEntrePso/{peso1}/{peso2}")
+    @Path("encontrarProductoMenorPeso/{peso}/{idTienda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Producto> findEntrePesosProducto(@PathParam("peso1")Float peso1, @PathParam("peso2")Float peso2) {
-        List<Producto> productos;
-        return productos = ejb.findEntreAlturaProducto(peso1,peso2);
-    }      
-    
-    protected EntityManager getEntityManager() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Producto> findMinPesoProducto(@PathParam("peso") Float peso, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findMinPesoProducto(peso, idTienda);
     }
-    
+
+    @GET
+    @Path("encontrarProductoEntrePesos/{peso1}/{peso2}/{idTienda}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Producto> findEntrePesosProducto(@PathParam("peso1") Float peso1, @PathParam("peso2") Float peso2, @PathParam("idTienda") int idTienda) throws ReadException {
+        return ejb.findEntrePesoProducto(peso1, peso2, idTienda);
+    }
+
 }

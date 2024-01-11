@@ -6,12 +6,15 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author David
  */
-public class TiendaEventoId implements Serializable{
+@Embeddable
+public class TiendaEventoId implements Serializable {
+
     private int idTienda;
     private int idEvento;
 
@@ -31,7 +34,4 @@ public class TiendaEventoId implements Serializable{
         this.idEvento = idEvento;
     }
 
-    
-    
-    
 }

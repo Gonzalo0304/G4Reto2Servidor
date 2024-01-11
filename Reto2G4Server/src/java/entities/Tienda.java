@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -14,12 +13,10 @@ import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -36,39 +33,30 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "Tienda", schema = "marketMaker")
 @NamedQueries({
-    
     @NamedQuery(
-            name="encontrarTiendaMenorEspacio", query="SELECT t FROM Tienda t WHERE espacio<:espacio"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTiendaMayorEspacio", query="SELECT t FROM Tienda t WHERE espacio>:espacio"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTiendaEntreEspacio", query="SELECT t FROM Tienda t WHERE espacio<=:espacio and espacio>=:espacio"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTiendaAnteriorFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion<:fechaCreacion"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTiendaPostiorFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion>:fechaCreacion"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTiendaEntreFecha", query="SELECT t FROM Tienda t WHERE fechaCreacion<=:fechaCreacionMin and fechaCreacion>=:fechaCreacionMax"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTiendaTipoPago", query="SELECT t FROM Tienda t WHERE tipoPago=:tipoPago"
-    ),
-    
-    @NamedQuery(
-            name="encontrarTodasTiendas", query="SELECT t FROM Tienda t"
+            name = "encontrarTodasTiendas", query = "SELECT t FROM Tienda t"
     )
-    
+    ,
+
+    @NamedQuery(
+            name = "encontrarTiendaMenorEspacio", query = "SELECT t FROM Tienda t WHERE espacio<:espacio"
+    )
+    ,
+
+    @NamedQuery(
+            name = "encontrarTiendaMayorEspacio", query = "SELECT t FROM Tienda t WHERE espacio>:espacio"
+    )
+    ,
+
+    @NamedQuery(
+            name = "encontrarTiendaEntreEspacio", query = "SELECT t FROM Tienda t WHERE espacio>=:espacioMin and espacio<=:espacioMax"
+    )
+    ,
+
+    @NamedQuery(
+            name = "encontrarTiendaTipoPago", query = "SELECT t FROM Tienda t WHERE tipoPago=:tipoPago"
+    )
+
 })
 @XmlRootElement
 public class Tienda implements Serializable {
@@ -81,18 +69,21 @@ public class Tienda implements Serializable {
     private String descripcion;
     @Enumerated(EnumType.STRING)
     private TipoPago tipoPago;
-    private double espacio;
+    private float espacio;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaCreacion;
-    @OneToOne(cascade=ALL, fetch=FetchType.EAGER)
-    @MapsId
-    @JoinColumn(name="idTienda")    
+
+    //@OneToOne(cascade = ALL)
+    //@JoinColumn(name = "idCliente", referencedColumnName = "idUsuario")
+    //private Cliente cliente;
+    @OneToOne(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cliente cliente;
-    @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Producto> productos = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="tienda")
-    private List<TiendaEvento> listaTiendasEvento = new ArrayList<>();
-    
+
+    @OneToMany(cascade = ALL, mappedBy = "tienda", orphanRemoval = true)
+    private List<Producto> productos;
+
+    @OneToMany(cascade = ALL, mappedBy = "tienda", orphanRemoval = true)
+    private List<TiendaEvento> listaTiendasEvento;
 
     public Integer getIdTienda() {
         return idTienda;
@@ -126,11 +117,11 @@ public class Tienda implements Serializable {
         this.tipoPago = tipoPago;
     }
 
-    public double getEspacio() {
+    public float getEspacio() {
         return espacio;
     }
 
-    public void setEspacio(double espacio) {
+    public void setEspacio(float espacio) {
         this.espacio = espacio;
     }
 
@@ -142,6 +133,7 @@ public class Tienda implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
+    @XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -193,6 +185,4 @@ public class Tienda implements Serializable {
         return true;
     }
 
-    
-    
 }

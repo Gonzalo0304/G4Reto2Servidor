@@ -6,7 +6,10 @@
 package service;
 
 import entities.Producto;
-import java.util.ArrayList;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,109 +26,178 @@ public class EJBProducto implements EJBProductoInterface {
     private EntityManager em;
 
     @Override
-    public void createProducto(Producto producto) {
-        em.persist(producto);
+    public void createProducto(Producto producto) throws CreateException {
+        try {
+            em.persist(producto);
+        } catch (Exception e) {
+            throw new CreateException(e.getMessage());
+        }
     }
 
     @Override
-    public void editProducto(Producto producto) {
-        em.merge(producto);
-        em.flush();
+    public void editProducto(Producto producto) throws UpdateException {
+        try {
+            if (!em.contains(producto)) {
+                em.merge(producto);
+            }
+            em.flush();
+        } catch (Exception e) {
+            throw new UpdateException(e.getMessage());
+        }
     }
 
     @Override
-    public void removeProducto(Producto producto) {
-        producto = em.merge(producto);
-        em.remove(producto);
+    public void removeProducto(Producto producto) throws DeleteException {
+        try {
+            producto = em.merge(producto);
+            em.remove(producto);
+        } catch (Exception e) {
+            throw new DeleteException(e.getMessage());
+        }
     }
 
     @Override
-    public Producto findProducto(Integer id) {
-        Producto producto = null;
-
-        producto = em.find(Producto.class, id);
-
+    public Producto findProducto(Integer id) throws ReadException {
+        Producto producto;
+        try {
+            producto = em.find(Producto.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return producto;
-    }   
+
+    }
 
     @Override
-    public List<Producto> findAllProducto() {
-        List<Producto> productos = null;
+    public List<Producto> findAllProducto() throws ReadException {
+        List<Producto> productos;
 
-        productos = em.createNamedQuery("encontrarProductoTodos").getResultList();
-
+        try {
+            productos = em.createNamedQuery("encontrarProductoTodos").getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findMaxAlturaProducto(Float altura) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoMayorAltura");
+    public List<Producto> encontrarProductoTodosTienda(int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoTodosTienda").setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findMinAlturaProducto(Float altura) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoMenorAltura");
+    public List<Producto> findMaxAlturaProducto(int altura, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoMayorAltura").setParameter("altura", altura).setParameter("idTienda", idTienda).getResultList();
+
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findEntreAlturaProducto(Float from, Float to) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoEntreAltura");
+    public List<Producto> findMinAlturaProducto(int altura, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoMenorAltura").setParameter("altura", altura).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findMaxPrecioProducto(Float altura) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoMayorrPrecio");
+    public List<Producto> findEntreAlturaProducto(int from, int to, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoEntreAltura").setParameter("alturaMin", from).setParameter("alturaMax", to).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findMinPrecioProducto(Float altura) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoMenorPrecio");
+    public List<Producto> findMaxPrecioProducto(Float precio, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoMayorPrecio").setParameter("precio", precio).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findEntrePrecioProducto(Float from, Float to) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoEntrePrecio");
+    public List<Producto> findMinPrecioProducto(Float precio, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoMenorPrecio").setParameter("precio", precio).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findMaxPesoProducto(Float altura) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoMenorPeso");
+    public List<Producto> findEntrePrecioProducto(Float from, Float to, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoEntrePrecio").setParameter("precioMin", from).setParameter("precioMax", to).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findMinPesoProducto(Float altura) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoMenorPeso");
+    public List<Producto> findMaxPesoProducto(Float peso, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoMayorPeso").setParameter("peso", peso).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 
     @Override
-    public List<Producto> findEntrePesoProducto(Float from, Float to) {
-        List<Producto> productos = null;
-        productos = (ArrayList<Producto>) em.createNamedQuery("Producto.encontrarProductoEntrePeso");
+    public List<Producto> findMinPesoProducto(Float peso, int idTienda) throws ReadException {
+        List<Producto> productos;
 
+        try {
+            productos = em.createNamedQuery("encontrarProductoMenorPeso").setParameter("peso", peso).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return productos;
+    }
+
+    @Override
+    public List<Producto> findEntrePesoProducto(Float from, Float to, int idTienda) throws ReadException {
+        List<Producto> productos;
+
+        try {
+            productos = em.createNamedQuery("encontrarProductoEntrePeso").setParameter("pesoMin", from).setParameter("pesoMax", to).setParameter("idTienda", idTienda).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
         return productos;
     }
 

@@ -6,12 +6,16 @@
 package service;
 
 import entities.Cliente;
+import entities.Usuario;
 import entities.Tienda;
+import entities.TipoVenta;
 import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
 import exceptions.UpdateException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,8 +34,8 @@ import javax.ws.rs.core.MediaType;
 @Path("entities.cliente")
 public class ClienteFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EJBClienteInterface ci;
+    @EJB
+    private EJBUsuarioInterface ci;
 
     public ClienteFacadeREST() {
 
@@ -46,35 +50,35 @@ public class ClienteFacadeREST {
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Tienda id, Cliente cliente) throws UpdateException {
+    public void edit(@PathParam("id") int id, Cliente cliente) throws UpdateException {
         ci.editCliente(cliente);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Tienda id) {
-        Cliente cliente = ci.encontrarClienteId(id);
-        ci.deleteCliente(cliente);
+    public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
+        Usuario cliente = ci.encontrarUsuarioId(id);
+        ci.deleteUsuario(cliente);
     }
 
     @GET
-    @Path("find/{id}")
+    @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente find(@PathParam("id") Tienda id) {
+    public Usuario find(@PathParam("id") Integer id) throws ReadException {
         return ci.encontrarClienteId(id);
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> findAll() {
+    public List<Cliente> findAll() throws ReadException {
+        return ci.encontrarTodosClientes();
 
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("encontrarUsuarioPorTipoVenta/{tipoVenta}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-
+    public List<Usuario> encontrarUsuarioSegunTipoVenta(@PathParam("tipoVenta") TipoVenta tipoVenta) throws ReadException {
+        return ci.encontrarUsuarioPorTipoVenta(tipoVenta);
     }
-
 }

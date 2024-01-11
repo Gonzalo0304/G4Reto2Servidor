@@ -6,10 +6,13 @@
 package service;
 
 import entities.Evento;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,66 +29,87 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.evento")
-public class EventoFacadeREST extends AbstractFacade<Evento> {
+public class EventoFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    @EJB
+    private EJBEventoInterface ei;
 
     public EventoFacadeREST() {
-        super(Evento.class);
+
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Evento entity) {
-        super.create(entity);
+    public void create(Evento evento) throws CreateException {
+        ei.createEvento(evento);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Evento entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") Long id, Evento evento) throws UpdateException {
+        ei.editEvento(evento);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
+        Evento evento = ei.encontrarEventoId(id);
+        ei.deleteEvento(evento);
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Evento find(@PathParam("id") Long id) {
-        return super.find(id);
+    public Evento find(@PathParam("id") Integer id) throws ReadException {
+        return ei.encontrarEventoId(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> findAll() {
-        return super.findAll();
+    public List<Evento> findAll() throws ReadException {
+        return ei.findAll();
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("encontrarEventoMayorNumParticipantes/{numParticipantes}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    public List<Evento> encontrarEventoMayorNumParticipantes(@PathParam("numParticipantes") int numParticipantes) throws ReadException {
+        return ei.encontrarEventoMayorNumParticipantes(numParticipantes);
     }
 
     @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
+    @Path("encontrarEventoMenorNumParticipantes/{numParticipantes}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoMenorNumParticipantes(@PathParam("numParticipantes") int numParticipantes) throws ReadException {
+        return ei.encontrarEventoMenorNumParticipantes(numParticipantes);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    @GET
+    @Path("encontrarEventoEntreParticipantes/{numParticipantesMin}/{numParticipantesMax}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoEntreParticipantes(@PathParam("numParticipantesMin") int numParticipantesMin, @PathParam("numParticipantesMax") int numParticipantesMax) throws ReadException {
+        return ei.encontrarEventoEntreParticipantes(numParticipantesMin, numParticipantesMax);
     }
-    
+
+    @GET
+    @Path("encontrarEventoMayorRecaudado/{totalRecaudado}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoMayorRecaudado(@PathParam("totalRecaudado") double totalRecaudado) throws ReadException {
+        return ei.encontrarEventoMayorRecaudado(totalRecaudado);
+    }
+
+    @GET
+    @Path("encontrarEventoMenorRecaudado/{totalRecaudado}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoMenorRecaudado(@PathParam("totalRecaudado") double totalRecaudado) throws ReadException {
+        return ei.encontrarEventoMenorRecaudado(totalRecaudado);
+    }
+
+    @GET
+    @Path("encontrarEventoEntreRecaudado/{totalRecaudadoMin}/{totalRecaudadoMax}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoEntreRecaudado(@PathParam("totalRecaudadoMin") int totalRecaudadoMin, @PathParam("totalRecaudadoMax") int totalRecaudadoMax) throws ReadException {
+        return ei.encontrarEventoEntreRecaudado(totalRecaudadoMin, totalRecaudadoMax);
+    }
 }

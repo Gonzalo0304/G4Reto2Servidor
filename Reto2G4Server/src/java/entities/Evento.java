@@ -5,8 +5,6 @@
  */
 package entities;
 
-import entities.Administrador;
-import entities.Tienda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,44 +32,39 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "Evento", schema = "marketMaker")
 @NamedQueries({
-    
     @NamedQuery(
-            name="encontrarEventoMenorFecha", query="SELECT e FROM Evento e WHERE fechaCreacion<:fechaCreacion"
-    ),
-    
+            name = "encontrarTodosEventos", query = "SELECT e FROM Evento e"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoMayorFecha", query="SELECT e FROM Evento e WHERE fechaCreacion>:fechaCreacion"
-    ),
-    
+            name = "encontrarEventoMayorNumParticipantes", query = "SELECT e FROM Evento e WHERE numParticipantes>:numParticipantes"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoEntreFecha", query="SELECT e FROM Evento e WHERE fechaCreacion<=:fechaCreacionMin and fechaCreacion>=:fechaCreacionMax"
-    ),
-    
+            name = "encontrarEventoMenorNumParticipantes", query = "SELECT e FROM Evento e WHERE numParticipantes<:numParticipantes"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoMayorNumParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes>:numParticipantes"
-    ),
-    
+            name = "encontrarEventoEntreParticipantes", query = "SELECT e FROM Evento e WHERE numParticipantes>=:numParticipantesMin and numParticipantes<=:numParticipantesMax"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoMenorNumParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes<:numParticipantes"
-    ),
-    
+            name = "encontrarEventoMayorRecaudado", query = "SELECT e FROM Evento e WHERE totalRecaudado>:totalRecaudado"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoEntreParticipantes", query="SELECT e FROM Evento e WHERE numParticipantes<=:numParticipantesMin and numParticipantes>=:numParticipantesMax"
-    ),
-    
+            name = "encontrarEventoMenorRecaudado", query = "SELECT e FROM Evento e WHERE totalRecaudado<:totalRecaudado"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoMayorRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado>:totalRecaudado"
-    ),
-    
-    @NamedQuery(
-            name="encontrarEventoMenorRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado<:totalRecaudado"
-    ),
-    
-    @NamedQuery(
-            name="encontrarEventoEntreRecaudado", query="SELECT e FROM Evento e WHERE totalRecaudado<=:totalRecaudadoMin and totalRecaudado>=:totalRecaudadoMax"
-    ),
-    
-})
+            name = "encontrarEventoEntreRecaudado", query = "SELECT e FROM Evento e WHERE totalRecaudado>=:totalRecaudadoMin and totalRecaudado<=:totalRecaudadoMax"
+    ),})
 @XmlRootElement
 public class Evento implements Serializable {
 
@@ -139,6 +132,36 @@ public class Evento implements Serializable {
 
     public void setListaTiendasEvento(List<TiendaEvento> listaTiendasEvento) {
         this.listaTiendasEvento = listaTiendasEvento;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + this.idEvento;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Evento other = (Evento) obj;
+        if (this.idEvento != other.idEvento) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Evento{" + "idEvento=" + idEvento + ", fechaCreacion=" + fechaCreacion + ", totalRecaudado=" + totalRecaudado + ", numParticipantes=" + numParticipantes + ", administradores=" + administradores + ", listaTiendasEvento=" + listaTiendasEvento + '}';
     }
 
 }

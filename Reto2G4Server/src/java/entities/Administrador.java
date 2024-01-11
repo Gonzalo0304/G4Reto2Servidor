@@ -14,6 +14,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,7 +38,6 @@ public class Administrador extends Usuario implements Serializable {
     @ManyToMany(mappedBy = "administradores", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Evento> eventosOrganizados;
 
-
     public int getNumEventos() {
         return numEventos;
     }
@@ -56,6 +57,6 @@ public class Administrador extends Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() +"Administrador{" + "numEventos=" + numEventos + ", eventosOrganizados=" + eventosOrganizados + '}';
+        return super.toString() + "Administrador{" + "numEventos=" + numEventos + ", eventosOrganizados=" + eventosOrganizados + '}';
     }
 }

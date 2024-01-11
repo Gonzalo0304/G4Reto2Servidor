@@ -6,11 +6,9 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,52 +18,71 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Gonzalo
  */
-
 @Entity
 @Table(name = "producto", schema = "marketMaker")
 @NamedQueries({
     @NamedQuery(
-            name="encontrarProductoTodos", query="SELECT p FROM Producto p"
-    ),
-    
+            name = "encontrarProductoTodos", query = "SELECT p FROM Producto p"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoMenorAltura", query="SELECT p FROM Producto p WHERE altura<:altura"
-    ),
-    
+            name = "encontrarProductoTodosTienda", query = "SELECT p FROM Producto p WHERE p.tienda.idTienda=:idTienda"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoMayorAltura", query="SELECT p FROM Producto p WHERE altura>:altura"
-    ),
-    
+            name = "encontrarProductoNombre", query = "SELECT p FROM Producto p WHERE nombre=:nombre"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoEntreAltura", query="SELECT p FROM Producto p WHERE altura<=:alturaMin and altura>=:alturaMax"
-    ),
-    
+            name = "encontrarProductoMenorAltura", query = "SELECT p FROM Producto p WHERE altura<=:altura and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoMenorPrecio", query="SELECT p FROM Producto p WHERE precio<:precio"
-    ),
-    
+            name = "encontrarProductoMayorAltura", query = "SELECT p FROM Producto p WHERE altura>=:altura and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoMayorPrecio", query="SELECT p FROM Producto p WHERE precio>:precio"
-    ),
-    
+            name = "encontrarProductoEntreAltura", query = "SELECT p FROM Producto p WHERE altura>:alturaMin and altura<:alturaMax and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoEntrePrecio", query="SELECT p FROM Producto p WHERE precio<=:precioMin and precio>=:precioMax"
-    ),
-    
+            name = "encontrarProductoMenorPrecio", query = "SELECT p FROM Producto p WHERE precio<:precio and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoMenorPeso", query="SELECT p FROM Producto p WHERE peso<:peso"
-    ),
-    
+            name = "encontrarProductoMayorPrecio", query = "SELECT p FROM Producto p WHERE precio>:precio and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarProductoMayorPeso", query="SELECT p FROM Producto p WHERE peso>:peso"
-    ),
+            name = "encontrarProductoEntrePrecio", query = "SELECT p FROM Producto p WHERE precio>=:precioMin and precio<=:precioMax and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
+    @NamedQuery(
+            name = "encontrarProductoMenorPeso", query = "SELECT p FROM Producto p WHERE peso<:peso and p.tienda.idTienda=:idTienda"
+    )
+    ,
+
+    @NamedQuery(
+            name = "encontrarProductoMayorPeso", query = "SELECT p FROM Producto p WHERE peso>:peso and p.tienda.idTienda=:idTienda"
+    )
+    ,
         @NamedQuery(
-            name="encontrarProductoEntrePeso", query="SELECT p FROM Producto p WHERE peso<=:pesoMin and peso>=:pesoMax"
+            name = "encontrarProductoEntrePeso", query = "SELECT p FROM Producto p WHERE peso>=:pesoMin and peso<=:pesoMax and p.tienda.idTienda=:idTienda"
     )
 })
 @XmlRootElement
@@ -74,16 +91,50 @@ public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProducto;
-    private double precio;
-    private String altura;
+    private String nombre;
+    private float precio;
+    private int altura;
     private String material;
-    private double peso;
+    private float peso;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechacreacion;
+
     @ManyToOne
     private Cliente cliente;
     @ManyToOne
     private Tienda tienda;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Tienda getTienda() {
+        return tienda;
+    }
+
+    public void setTienda(Tienda tienda) {
+        this.tienda = tienda;
+    }
 
     public Integer getIdProducto() {
         return idProducto;
@@ -93,20 +144,12 @@ public class Producto implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public double getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
-    }
-
-    public String getTalla() {
-        return altura;
-    }
-
-    public void setTalla(String talla) {
-        this.altura = talla;
     }
 
     public String getMaterial() {
@@ -117,11 +160,11 @@ public class Producto implements Serializable {
         this.material = material;
     }
 
-    public double getPeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 
@@ -162,6 +205,5 @@ public class Producto implements Serializable {
     public String toString() {
         return "Producto{" + "idProducto=" + idProducto + ", precio=" + precio + ", talla=" + altura + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + ", cliente=" + cliente + ", tienda=" + tienda + '}';
     }
-    
-    
+
 }

@@ -5,11 +5,15 @@
  */
 package service;
 
+import entities.Cliente;
 import entities.Usuario;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,66 +30,66 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.usuario")
-public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
+public class UsuarioFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    @EJB
+    private EJBUsuarioInterface ejb;
 
     public UsuarioFacadeREST() {
-        super(Usuario.class);
+
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Usuario entity) {
-        super.create(entity);
+    public void create(Usuario usuario) throws CreateException {
+        ejb.createUsuario(usuario);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Usuario entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") Integer id, Usuario usuario) throws UpdateException {
+        ejb.editUsuario(usuario);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
+        ejb.deleteUsuario(ejb.encontrarUsuarioId(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Usuario find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Usuario find(@PathParam("id") Integer id) throws ReadException {
+        return ejb.encontrarUsuarioId(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Usuario> findAll() {
-        return super.findAll();
+    public List<Usuario> findAll() throws ReadException {
+        return ejb.findAll();
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("encontrarUsuarioPorNombre/{nombre}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    public List<Usuario> encontrarUsuarioPorNombre(@PathParam("nombre") String nombre) throws ReadException {
+        return ejb.encontrarUsuarioPorNombre(nombre);
     }
 
     @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
+    @Path("iniciarSesion/{correo}/{password}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
+        Usuario usuario = ejb.iniciarSesion(correo, password);
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+        if (usuario instanceof Cliente) {
+            usuario = ejb.encontrarClienteId(usuario.getIdUsuario());
+        } else {
+            usuario = ejb.encontrarAdminId(usuario.getIdUsuario());
+        }
 
+        return usuario;
+    }
 }

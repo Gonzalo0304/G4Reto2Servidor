@@ -5,7 +5,6 @@
  */
 package service;
 
-import entities.Evento;
 import entities.Tienda;
 import entities.TipoPago;
 import exceptions.CreateException;
@@ -36,12 +35,6 @@ public interface EJBTiendaInterface {
     public List<Tienda> encontrarTiendaMayorEspacio(Float espacio) throws ReadException;
 
     public List<Tienda> encontrarTiendaEntreEspacio(Float espacioMin, Float espacioMax) throws ReadException;
-
-    public List<Tienda> encontrarTiendaAnteriorFecha(Date fecha) throws ReadException;
-
-    public List<Tienda> encontrarTiendaPosteriorFecha(Date fecha) throws ReadException;
-
-    public List<Tienda> encontrarTiendaEntreFecha(Date fechaMin, Date fechaMax) throws ReadException;
 
     public List<Tienda> encontrarTiendaTipoPago(TipoPago tipoPago) throws ReadException;
 

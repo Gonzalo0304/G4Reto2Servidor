@@ -6,10 +6,15 @@
 package service;
 
 import entities.Administrador;
+import entities.Usuario;
+import entities.Tienda;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,66 +31,63 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.administrador")
-public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
+public class AdministradorFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    @EJB
+    private EJBUsuarioInterface ci;
 
     public AdministradorFacadeREST() {
-        super(Administrador.class);
+
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Administrador entity) {
-        super.create(entity);
+    public void create(Administrador admin) throws CreateException {
+        ci.createAdmin(admin);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Administrador entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") int id, Administrador admin) throws UpdateException {
+        ci.editAdmin(admin);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
+        Usuario usuario = ci.encontrarUsuarioId(id);
+        ci.deleteUsuario(usuario);
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Administrador find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Usuario find(@PathParam("id") Integer id) throws ReadException {
+        return ci.encontrarAdminId(id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Administrador> findAll() {
-        return super.findAll();
+    public List<Administrador> findAll() throws ReadException {
+        return ci.encontrarTodosAdmins();
+
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("encontrarUsuarioPorMinNumeroEventos/{numEventos}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Administrador> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    public List<Usuario> encontrarUsuarioPorMinNumeroEventos(@PathParam("numEventos") int numEventos) throws ReadException {
+        return ci.encontrarUsuarioPorMinNumeroEventos(numEventos);
+
     }
 
     @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
+    @Path("encontrarUsuarioPorMaxNumeroEventos/{numEventos}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Usuario> encontrarUsuarioPorMaxNumeroEventos(@PathParam("numEventos") int numEventos) throws ReadException {
+        return ci.encontrarUsuarioPorMaxNumeroEventos(numEventos);
+
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }

@@ -5,18 +5,15 @@
  */
 package entities;
 
-import entities.Tienda;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,16 +33,17 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cliente extends Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Enumerated(EnumType.STRING)
     private TipoVenta tipoVenta;
-    @OneToOne(cascade=ALL, fetch=FetchType.EAGER)
-    private Tienda tienda;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Producto> productosCreados;
-    
 
-    @XmlTransient
+    //@OneToOne(cascade = ALL, orphanRemoval = true)
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "id_tienda")
+    private Tienda tienda;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Producto> productosCreados;
+
     public TipoVenta getTipoVenta() {
         return tipoVenta;
     }
@@ -62,6 +60,7 @@ public class Cliente extends Usuario implements Serializable {
         this.tienda = tienda;
     }
 
+    @XmlTransient
     public List<Producto> getProductosCreados() {
         return productosCreados;
     }
@@ -69,8 +68,5 @@ public class Cliente extends Usuario implements Serializable {
     public void setProductosCreados(List<Producto> productosCreados) {
         this.productosCreados = productosCreados;
     }
-    
-    
-    
 
 }

@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,37 +33,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
 @NamedQueries({
-    
     @NamedQuery(
-            name="encontrarUsuarioMenorFechaNac", query="SELECT e FROM Usuario e WHERE fechaNacimiento<:fechaNacimiento"
-    ),
-    
+            name = "encontrarTodosUsuarios", query = "SELECT u FROM Usuario u"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarUsuarioMayorFechaNac", query="SELECT e FROM Usuario e WHERE fechaNacimiento>:fechaNacimiento"
-    ),
-    
+            name = "iniciarSesion", query = "SELECT u FROM Usuario u WHERE correo=:correo and password=:password"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarUsuarioEntreFechaNac", query="SELECT e FROM Usuario e WHERE fechaNacimiento<=:fechaNacimientoMin and fechaNacimiento>=:fechaNacimientoMax"
-    ),
-    
+            name = "encontrarTodosClientes", query = "SELECT u FROM Usuario u WHERE DTYPE='C'"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarUsuarioMayorNumEventos", query="SELECT e FROM Usuario e WHERE numEventos>:numEventos"
-    ),
-    
+            name = "encontrarTodosAdmins", query = "SELECT u FROM Usuario u WHERE DTYPE='A'"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarUsuarioMenorNumEventos", query="SELECT e FROM Usuario e WHERE numEventos<:numEventos"
-    ),
-    
+            name = "encontrarUsuarioPorNombre", query = "SELECT u FROM Usuario u WHERE nombre LIKE :nombre"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarUsuarioEntreNumEventos", query="SELECT e FROM Usuario e WHERE numEventos<=:numEventosMin and numEventos>=:numEventosMax"
-    ),
-    
+            name = "encontrarUsuarioPorMinNumeroEventos", query = "SELECT u FROM Usuario u WHERE numEventos<=:numEventos"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarUsuarioSegunTipoVenta", query="SELECT e FROM Evento e WHERE tipoVenta=:tipoVenta"
-    ),
-    
-    
-})
+            name = "encontrarUsuarioPorMaxNumeroEventos", query = "SELECT u FROM Usuario u WHERE numEventos>=:numEventos"
+    )
+    ,
+    @NamedQuery(
+            name = "encontrarUsuarioPorTipoVenta", query = "SELECT u FROM Usuario u WHERE tipoVenta=:tipoVenta"
+    ),})
 @XmlRootElement
 public class Usuario implements Serializable {
 
@@ -155,7 +159,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Usuario{" + "idUsuario=" + idUsuario + ", nombre=" + nombre + ", password=" + password + ", correo=" + correo + ", fechaNacimiento=" + fechaNacimiento + '}';
     }
-
-   
 
 }
