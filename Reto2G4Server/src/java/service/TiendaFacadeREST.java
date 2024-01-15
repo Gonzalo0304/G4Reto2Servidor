@@ -46,6 +46,7 @@ public class TiendaFacadeREST {
     }
 
     @PUT
+    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Tienda tienda) throws UpdateException {
         ti.editTienda(tienda);

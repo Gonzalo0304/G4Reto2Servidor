@@ -5,8 +5,6 @@
  */
 package entities;
 
-import entities.Evento;
-import entities.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -14,10 +12,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +30,7 @@ public class Administrador extends Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int numEventos;
-    @ManyToMany(mappedBy = "administradores", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "administradores", fetch = FetchType.EAGER)
     private List<Evento> eventosOrganizados;
 
     public int getNumEventos() {
@@ -46,7 +41,6 @@ public class Administrador extends Usuario implements Serializable {
         this.numEventos = numEventos;
     }
 
-    @XmlTransient
     public List<Evento> getEventosOrganizados() {
         return eventosOrganizados;
     }
