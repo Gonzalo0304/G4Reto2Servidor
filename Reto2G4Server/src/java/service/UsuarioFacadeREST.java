@@ -5,6 +5,8 @@
  */
 package service;
 
+import static encriptation.ServerEncriptacion.desencriptar;
+import entities.Administrador;
 import entities.Cliente;
 import entities.Usuario;
 import exceptions.CreateException;
@@ -82,14 +84,21 @@ public class UsuarioFacadeREST {
     @Path("iniciarSesion/{correo}/{password}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
-        Usuario usuario = ejb.iniciarSesion(correo, password);
-
+        String pass = desencriptar(password);
+        System.out.println(pass);
+        Usuario usuario = ejb.iniciarSesion(correo, pass);
+        Cliente cliente;
+        Administrador admin;
+        System.out.println(usuario.toString());
         if (usuario instanceof Cliente) {
-            usuario = ejb.encontrarClienteId(usuario.getIdUsuario());
+            cliente = (Cliente) ejb.encontrarClienteId(usuario.getIdUsuario());
+            System.out.println(cliente.toString());
+            return cliente;
         } else {
-            usuario = ejb.encontrarAdminId(usuario.getIdUsuario());
+            admin = (Administrador) ejb.encontrarAdminId(usuario.getIdUsuario());
+            System.out.println(admin.toString());
+            return admin;
         }
 
-        return usuario;
     }
 }

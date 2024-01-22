@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -100,7 +102,7 @@ public class Producto implements Serializable {
 
     @ManyToOne
     private Cliente cliente;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Tienda tienda;
 
     public String getNombre() {
@@ -119,6 +121,7 @@ public class Producto implements Serializable {
         this.altura = altura;
     }
 
+    @XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -127,6 +130,7 @@ public class Producto implements Serializable {
         this.cliente = cliente;
     }
 
+    @XmlTransient
     public Tienda getTienda() {
         return tienda;
     }

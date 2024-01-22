@@ -39,10 +39,14 @@ public class EJBTienda implements EJBTiendaInterface {
     @Override
     public void editTienda(Tienda tienda) throws UpdateException {
         try {
+            System.out.println(tienda.toString());
             if (!em.contains(tienda)) {
+                System.out.println(tienda.toString());
                 em.merge(tienda);
+                System.out.println(tienda.toString());
             }
             em.flush();
+            System.out.println(tienda.toString());
         } catch (Exception e) {
             throw new UpdateException(e.getMessage());
         }

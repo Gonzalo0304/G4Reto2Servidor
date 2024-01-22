@@ -73,7 +73,7 @@ public class Evento implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idEvento;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaCreacion;
+    private Date fecha;
     private double totalRecaudado;
     private int numParticipantes;
 
@@ -92,12 +92,12 @@ public class Evento implements Serializable {
         this.idEvento = idEvento;
     }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public double getTotalRecaudado() {
@@ -161,7 +161,7 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "Evento{" + "idEvento=" + idEvento + ", fechaCreacion=" + fechaCreacion + ", totalRecaudado=" + totalRecaudado + ", numParticipantes=" + numParticipantes + ", administradores=" + administradores + ", listaTiendasEvento=" + listaTiendasEvento + '}';
+        return "Evento{" + "idEvento=" + idEvento + ", fecha=" + fecha + ", totalRecaudado=" + totalRecaudado + ", numParticipantes=" + numParticipantes + ", administradores=" + administradores + ", listaTiendasEvento=" + listaTiendasEvento + '}';
     }
 
 }
