@@ -140,7 +140,7 @@ public class Tienda implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
+    @XmlTransient
     public List<Producto> getProductos() {
         return productos;
     }
