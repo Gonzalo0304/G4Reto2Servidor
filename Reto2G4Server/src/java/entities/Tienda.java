@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -78,10 +78,10 @@ public class Tienda implements Serializable {
     @OneToOne(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cliente cliente;
 
-    @OneToMany(cascade = ALL, mappedBy = "tienda", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", orphanRemoval = true)
     private List<Producto> productos;
 
-    @OneToMany(cascade = ALL, mappedBy = "tienda", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", orphanRemoval = true)
     private List<TiendaEvento> listaTiendasEvento;
 
     public Integer getIdTienda() {
@@ -140,6 +140,7 @@ public class Tienda implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
     @XmlTransient
     public List<Producto> getProductos() {
         return productos;
@@ -181,6 +182,11 @@ public class Tienda implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + ", cliente=" + cliente + ", productos=" + productos + ", listaTiendasEvento=" + listaTiendasEvento + '}';
     }
 
 }
