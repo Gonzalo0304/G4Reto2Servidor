@@ -7,7 +7,6 @@ package service;
 
 import entities.Cliente;
 import entities.Usuario;
-import entities.Tienda;
 import entities.TipoVenta;
 import exceptions.CreateException;
 import exceptions.DeleteException;
@@ -51,6 +50,7 @@ public class ClienteFacadeREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") int id, Cliente cliente) throws UpdateException {
+        System.out.println(cliente.toString());
         ci.editCliente(cliente);
     }
 

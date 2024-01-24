@@ -81,24 +81,41 @@ public class UsuarioFacadeREST {
     }
 
     @GET
+    @Path("encontrarUsuarioCorreo/{correo}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario encontrarUsuarioCorreo(@PathParam("correo") String correo) throws ReadException {
+        return ejb.encontrarUsuarioCorreo(correo);
+    }
+
+//    @GET
+//    @Path("iniciarSesion/{correo}/{password}")
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
+//        String pass = desencriptar(password);
+//        System.out.println(pass);
+//        Usuario usuario = ejb.iniciarSesion(correo, pass);
+//        Cliente cliente;
+//        Administrador admin;
+//        System.out.println(usuario.toString());
+//        if (usuario instanceof Cliente) {
+//            cliente = (Cliente) ejb.encontrarClienteId(usuario.getIdUsuario());
+//            System.out.println(cliente.toString());
+//            return cliente;
+//        } else {
+//            admin = (Administrador) ejb.encontrarAdminId(usuario.getIdUsuario());
+//            System.out.println(admin.toString());
+//            return admin;
+//        }
+//
+//    }
+    @GET
     @Path("iniciarSesion/{correo}/{password}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
         String pass = desencriptar(password);
-        System.out.println(pass);
         Usuario usuario = ejb.iniciarSesion(correo, pass);
-        Cliente cliente;
-        Administrador admin;
         System.out.println(usuario.toString());
-        if (usuario instanceof Cliente) {
-            cliente = (Cliente) ejb.encontrarClienteId(usuario.getIdUsuario());
-            System.out.println(cliente.toString());
-            return cliente;
-        } else {
-            admin = (Administrador) ejb.encontrarAdminId(usuario.getIdUsuario());
-            System.out.println(admin.toString());
-            return admin;
-        }
+        return usuario;
 
     }
 }

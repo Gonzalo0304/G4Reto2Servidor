@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author David
  */
 @Entity
-@DiscriminatorValue("C")
+@DiscriminatorValue("Cliente")
 @XmlRootElement
 public class Cliente extends Usuario implements Serializable {
 
@@ -41,7 +41,7 @@ public class Cliente extends Usuario implements Serializable {
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "id_tienda")
     private Tienda tienda;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Producto> productosCreados;
 
     public TipoVenta getTipoVenta() {
