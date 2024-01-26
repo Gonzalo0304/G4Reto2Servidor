@@ -69,4 +69,9 @@ public class Cliente extends Usuario implements Serializable {
         this.productosCreados = productosCreados;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "Cliente{" + "tipoVenta=" + tipoVenta + ", tienda=" + tienda + ", productosCreados=" + productosCreados + '}';
+    }
+
 }

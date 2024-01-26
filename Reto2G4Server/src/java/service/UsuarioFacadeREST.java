@@ -5,9 +5,8 @@
  */
 package service;
 
+import static encriptation.EnvioEmail.enviarEmail;
 import static encriptation.ServerEncriptacion.desencriptar;
-import entities.Administrador;
-import entities.Cliente;
 import entities.Usuario;
 import exceptions.CreateException;
 import exceptions.DeleteException;
@@ -118,4 +117,21 @@ public class UsuarioFacadeREST {
         return usuario;
 
     }
+
+    @GET
+    @Path("envioEmail/{correo}")
+    public void envioEmail(@PathParam("correo") String email) throws ReadException {
+        enviarEmail(email);
+
+        /*try {
+            if (usuario != null) {
+                usuario.setPassword(enviarEmail(usuario.getCorreo()));
+                edit(usuario.getIdUsuario(), usuario);
+
+            }
+        } catch (UpdateException ex) {
+            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }
+
 }
