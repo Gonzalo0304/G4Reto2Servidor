@@ -75,13 +75,13 @@ public class Tienda implements Serializable {
     //@OneToOne(cascade = ALL)
     //@JoinColumn(name = "idCliente", referencedColumnName = "idUsuario")
     //private Cliente cliente;
-    @OneToOne(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "tienda", cascade = CascadeType.ALL)
     private Cliente cliente;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda")
     private List<Producto> productos;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda")
     private List<TiendaEvento> listaTiendasEvento;
 
     public Integer getIdTienda() {
@@ -186,7 +186,7 @@ public class Tienda implements Serializable {
 
     @Override
     public String toString() {
-        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + ", cliente=" + cliente + ", productos=" + productos + ", listaTiendasEvento=" + listaTiendasEvento + '}';
+        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + ", productos=" + productos + ", listaTiendasEvento=" + listaTiendasEvento + '}';
     }
 
 }

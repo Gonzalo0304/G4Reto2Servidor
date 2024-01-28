@@ -69,6 +69,7 @@ public class EJBUsuario implements EJBUsuarioInterface {
 
     @Override
     public void editCliente(Cliente cliente) throws UpdateException {
+        System.out.println(cliente.toString());
         try {
             if (!em.contains(cliente)) {
                 em.merge(cliente);
@@ -109,6 +110,17 @@ public class EJBUsuario implements EJBUsuarioInterface {
             throw new ReadException(e.getMessage());
         }
         return clientes;
+    }
+
+    @Override
+    public Usuario encontrarUsuarioCorreo(String correo) throws ReadException {
+        Usuario usuario;
+        try {
+            usuario = (Usuario) em.createNamedQuery("encontrarUsuarioCorreo").setParameter("correo", correo).getSingleResult();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return usuario;
     }
 
     @Override

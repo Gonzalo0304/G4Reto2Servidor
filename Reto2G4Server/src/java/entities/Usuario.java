@@ -44,12 +44,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     ,
 
     @NamedQuery(
-            name = "encontrarTodosClientes", query = "SELECT u FROM Usuario u WHERE DTYPE='C'"
+            name = "encontrarUsuarioCorreo", query = "SELECT u FROM Usuario u WHERE correo=:correo"
     )
     ,
 
     @NamedQuery(
-            name = "encontrarTodosAdmins", query = "SELECT u FROM Usuario u WHERE DTYPE='A'"
+            name = "encontrarTodosClientes", query = "SELECT u FROM Usuario u WHERE DTYPE='Cliente'"
+    )
+    ,
+
+    @NamedQuery(
+            name = "encontrarTodosAdmins", query = "SELECT u FROM Usuario u WHERE DTYPE='Administrador'"
     )
     ,
 

@@ -5,9 +5,8 @@
  */
 package service;
 
+import static encriptation.EnvioEmail.enviarEmail;
 import static encriptation.ServerEncriptacion.desencriptar;
-import entities.Administrador;
-import entities.Cliente;
 import entities.Usuario;
 import exceptions.CreateException;
 import exceptions.DeleteException;
@@ -81,24 +80,58 @@ public class UsuarioFacadeREST {
     }
 
     @GET
+    @Path("encontrarUsuarioCorreo/{correo}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario encontrarUsuarioCorreo(@PathParam("correo") String correo) throws ReadException {
+        return ejb.encontrarUsuarioCorreo(correo);
+    }
+
+//    @GET
+//    @Path("iniciarSesion/{correo}/{password}")
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
+//        String pass = desencriptar(password);
+//        System.out.println(pass);
+//        Usuario usuario = ejb.iniciarSesion(correo, pass);
+//        Cliente cliente;
+//        Administrador admin;
+//        System.out.println(usuario.toString());
+//        if (usuario instanceof Cliente) {
+//            cliente = (Cliente) ejb.encontrarClienteId(usuario.getIdUsuario());
+//            System.out.println(cliente.toString());
+//            return cliente;
+//        } else {
+//            admin = (Administrador) ejb.encontrarAdminId(usuario.getIdUsuario());
+//            System.out.println(admin.toString());
+//            return admin;
+//        }
+//
+//    }
+    @GET
     @Path("iniciarSesion/{correo}/{password}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
         String pass = desencriptar(password);
-        System.out.println(pass);
         Usuario usuario = ejb.iniciarSesion(correo, pass);
-        Cliente cliente;
-        Administrador admin;
         System.out.println(usuario.toString());
-        if (usuario instanceof Cliente) {
-            cliente = (Cliente) ejb.encontrarClienteId(usuario.getIdUsuario());
-            System.out.println(cliente.toString());
-            return cliente;
-        } else {
-            admin = (Administrador) ejb.encontrarAdminId(usuario.getIdUsuario());
-            System.out.println(admin.toString());
-            return admin;
-        }
+        return usuario;
 
     }
+
+    @GET
+    @Path("envioEmail/{correo}")
+    public void envioEmail(@PathParam("correo") String email) throws ReadException {
+        enviarEmail(email);
+
+        /*try {
+            if (usuario != null) {
+                usuario.setPassword(enviarEmail(usuario.getCorreo()));
+                edit(usuario.getIdUsuario(), usuario);
+
+            }
+        } catch (UpdateException ex) {
+            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }
+
 }

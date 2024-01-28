@@ -22,21 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author inigo
  */
 @Entity
-@DiscriminatorValue("A")
+@DiscriminatorValue("Administrador")
 @XmlRootElement
 public class Administrador extends Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int numEventos;
+    private Integer numEventos;
     @ManyToMany(mappedBy = "administradores", fetch = FetchType.EAGER)
     private List<Evento> eventosOrganizados;
 
-    public int getNumEventos() {
+    public Integer getNumEventos() {
         return numEventos;
     }
 
-    public void setNumEventos(int numEventos) {
+    public void setNumEventos(Integer numEventos) {
         this.numEventos = numEventos;
     }
 

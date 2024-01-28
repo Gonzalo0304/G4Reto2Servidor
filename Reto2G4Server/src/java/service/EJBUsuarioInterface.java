@@ -39,6 +39,8 @@ public interface EJBUsuarioInterface {
 
     public Usuario encontrarUsuarioId(int id) throws ReadException;
 
+    public Usuario encontrarUsuarioCorreo(String correo) throws ReadException;
+
     public Usuario encontrarClienteId(int id) throws ReadException;
 
     public Usuario encontrarAdminId(int id) throws ReadException;

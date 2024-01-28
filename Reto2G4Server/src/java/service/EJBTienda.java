@@ -28,6 +28,7 @@ public class EJBTienda implements EJBTiendaInterface {
 
     @Override
     public void createTienda(Tienda tienda) throws CreateException {
+        System.out.println(tienda.toString());
         try {
             em.persist(tienda);
         } catch (Exception e) {

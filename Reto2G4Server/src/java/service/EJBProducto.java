@@ -27,7 +27,7 @@ public class EJBProducto implements EJBProductoInterface {
 
     @Override
     public void createProducto(Producto producto) throws CreateException {
-        try {   
+        try {
             em.merge(producto);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
