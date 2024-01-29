@@ -27,7 +27,7 @@ public class ServerEncriptacion {
         try {
             byte[] privateKeyBytes;
             // Load Public Key
-            FileInputStream fis = new FileInputStream("C:\\Users\\Daviz\\Desktop\\clave\\privateKey.der");
+            FileInputStream fis = new FileInputStream("C:\\Users\\INFORMATICA\\Desktop\\2DAM\\keys\\privateKey.der");
             privateKeyBytes = new byte[fis.available()];
             fis.read(privateKeyBytes);
 

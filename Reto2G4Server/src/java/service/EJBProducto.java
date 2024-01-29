@@ -49,7 +49,6 @@ public class EJBProducto implements EJBProductoInterface {
     @Override
     public void removeProducto(Producto producto) throws DeleteException {
         try {
-            producto = em.merge(producto);
             em.remove(producto);
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());

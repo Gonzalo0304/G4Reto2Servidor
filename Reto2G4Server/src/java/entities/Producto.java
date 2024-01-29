@@ -100,7 +100,7 @@ public class Producto implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechacreacion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Cliente cliente;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Tienda tienda;
@@ -121,7 +121,7 @@ public class Producto implements Serializable {
         this.altura = altura;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -130,7 +130,6 @@ public class Producto implements Serializable {
         this.cliente = cliente;
     }
 
-    @XmlTransient
     public Tienda getTienda() {
         return tienda;
     }

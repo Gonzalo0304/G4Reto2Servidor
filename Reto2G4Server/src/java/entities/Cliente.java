@@ -37,11 +37,11 @@ public class Cliente extends Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     private TipoVenta tipoVenta;
 
-    //@OneToOne(cascade = ALL, orphanRemoval = true)
+    //@OneToOne(orphanRemoval = true)
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "id_tienda")
     private Tienda tienda;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Producto> productosCreados;
 
     public TipoVenta getTipoVenta() {
