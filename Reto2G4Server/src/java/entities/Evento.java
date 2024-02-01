@@ -81,7 +81,7 @@ public class Evento implements Serializable {
     @JoinTable(name = "Admin_Evento", schema = "marketMaker")
     private List<Administrador> administradores;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
+    @OneToMany(mappedBy = "evento")
     private List<TiendaEvento> listaTiendasEvento;
 
     public int getIdEvento() {
@@ -161,7 +161,7 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "Evento{" + "idEvento=" + idEvento + ", fecha=" + fecha + ", totalRecaudado=" + totalRecaudado + ", numParticipantes=" + numParticipantes + ", administradores=" + administradores + ", listaTiendasEvento=" + listaTiendasEvento + '}';
+        return "Evento{" + "idEvento=" + idEvento + ", fecha=" + fecha + ", totalRecaudado=" + totalRecaudado + ", numParticipantes=" + numParticipantes + '}';
     }
 
 }

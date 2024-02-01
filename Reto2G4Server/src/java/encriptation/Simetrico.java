@@ -20,11 +20,11 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class CredentialDescifrator {
+public class Simetrico {
 
     private static byte[] salt = "esta es la salt!".getBytes();
 
-    private static String rutaFichero = System.getProperty("user.home") + File.separator + "Desktop\\envioEmail\\credenciales.dat";
+    private static String rutaFichero = System.getProperty("user.home") + File.separator + "Documents\\MarketMaker\\credenciales.dat";
 
     // Este metodo va ha leer el fichero .dat y sacar el gmail y la contraseña
     public static String descifrarTexto(String clave) {

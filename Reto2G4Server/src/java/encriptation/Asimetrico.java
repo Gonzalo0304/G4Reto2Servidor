@@ -18,7 +18,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.xml.bind.DatatypeConverter;
 
-public class ServerEncriptacion {
+public class Asimetrico {
 
     public static String desencriptar(String pass) {
 
@@ -27,7 +27,7 @@ public class ServerEncriptacion {
         try {
             byte[] privateKeyBytes;
             // Load Public Key
-            FileInputStream fis = new FileInputStream("C:\\Users\\Daviz\\Desktop\\clave\\privateKey.der");
+            FileInputStream fis = new FileInputStream(System.getProperty("user.home") + File.separator + "Documents\\MarketMaker\\privateKey.der");
             privateKeyBytes = new byte[fis.available()];
             fis.read(privateKeyBytes);
 

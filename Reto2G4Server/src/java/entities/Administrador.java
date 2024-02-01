@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,6 +47,36 @@ public class Administrador extends Usuario implements Serializable {
 
     public void setEventosOrganizados(List<Evento> eventosOrganizados) {
         this.eventosOrganizados = eventosOrganizados;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.numEventos);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Administrador other = (Administrador) obj;
+        if (!Objects.equals(this.numEventos, other.numEventos)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Administrador{" + "numEventos=" + numEventos + ", eventosOrganizados=" + eventosOrganizados + '}';
     }
 
 }

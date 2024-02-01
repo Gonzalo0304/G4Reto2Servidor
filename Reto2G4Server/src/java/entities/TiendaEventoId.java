@@ -34,4 +34,9 @@ public class TiendaEventoId implements Serializable {
         this.idEvento = idEvento;
     }
 
+    @Override
+    public String toString() {
+        return "TiendaEventoId{" + "idTienda=" + idTienda + ", idEvento=" + idEvento + '}';
+    }
+
 }

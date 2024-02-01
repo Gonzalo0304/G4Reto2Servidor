@@ -5,7 +5,7 @@
  */
 package encriptation;
 
-import static encriptation.CredentialDescifrator.descifrarTexto;
+import static encriptation.Simetrico.descifrarTexto;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;

@@ -15,61 +15,61 @@ import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author David
  */
 @Entity
-@Table(name="Tienda_Evento", schema="marketMaker")
 @NamedQueries({
-    
     @NamedQuery(
-            name="encontrarEventoMenorFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion<:fechaInscripcion"
-    ),
-    
+            name = "encontrarTiendaEvento", query = "SELECT te FROM TiendaEvento te WHERE te.idTiendaEvento.idTienda = :idTienda AND te.idTiendaEvento.idEvento = :idEvento"
+    )
+    ,
+
     @NamedQuery(
-            name="encontrarEventoMayorFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion>:fechaInscripcion"
-    ),
-    
-    @NamedQuery(
-            name="encontrarEventoEntreFechaInscripcion", query="SELECT te FROM TiendaEvento te WHERE fechaInscripcion<=:fechaInscripcionMin and fechaInscripcion>=:fechaInscripcionMax"
-    ),
-    
-})
+            name = "encontrarTodosTiendaEvento", query = "SELECT te FROM TiendaEvento te"
+    ),})
+@Table(name = "tienda_evento", schema = "marketMaker")
 @XmlRootElement
 public class TiendaEvento implements Serializable {
+
     @EmbeddedId
-    private TiendaEventoId idTienEven;
-   // @JsonIgnore
+    private TiendaEventoId idTiendaEvento;
+    // @JsonIgnore
     @MapsId("idTienda")
     @ManyToOne
     private Tienda tienda;
-    
-   // @JsonIgnore
+
+    // @JsonIgnore
     @MapsId("idEvento")
     @ManyToOne
     private Evento evento;
-    
+
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaInscripcion;
 
-    public TiendaEventoId getIdTienEven() {
-        return idTienEven;
+    public TiendaEventoId getIdTiendaEvento() {
+        return idTiendaEvento;
     }
 
-    public void setIdTienEven(TiendaEventoId idTienEven) {
-        this.idTienEven = idTienEven;
+    public void setIdTiendaEvento(TiendaEventoId idTiendaEvento) {
+        this.idTiendaEvento = idTiendaEvento;
     }
 
     public Tienda getTienda() {
         return tienda;
     }
 
+    @XmlTransient
     public void setTienda(Tienda tienda) {
         this.tienda = tienda;
     }
 
+    @XmlTransient
     public Evento getEvento() {
         return evento;
     }
@@ -86,11 +86,13 @@ public class TiendaEvento implements Serializable {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.idTienEven);
+        hash = 97 * hash + Objects.hashCode(this.idTiendaEvento);
+        hash = 97 * hash + Objects.hashCode(this.tienda);
+        hash = 97 * hash + Objects.hashCode(this.evento);
+        hash = 97 * hash + Objects.hashCode(this.fechaInscripcion);
         return hash;
     }
 
@@ -106,7 +108,16 @@ public class TiendaEvento implements Serializable {
             return false;
         }
         final TiendaEvento other = (TiendaEvento) obj;
-        if (!Objects.equals(this.idTienEven, other.idTienEven)) {
+        if (!Objects.equals(this.idTiendaEvento, other.idTiendaEvento)) {
+            return false;
+        }
+        if (!Objects.equals(this.tienda, other.tienda)) {
+            return false;
+        }
+        if (!Objects.equals(this.evento, other.evento)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaInscripcion, other.fechaInscripcion)) {
             return false;
         }
         return true;
@@ -114,11 +125,7 @@ public class TiendaEvento implements Serializable {
 
     @Override
     public String toString() {
-        return "TiendaEvento{" + "idTienEven=" + idTienEven + ", tienda=" + tienda + ", evento=" + evento + ", fechaInscripcion=" + fechaInscripcion + '}';
+        return "TiendaEvento{" + "idTiendaEvento=" + idTiendaEvento + ", tienda=" + tienda + ", evento=" + evento + ", fechaInscripcion=" + fechaInscripcion + '}';
     }
 
-    
-    
-    
-    
 }

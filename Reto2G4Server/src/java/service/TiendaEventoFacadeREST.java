@@ -7,10 +7,13 @@ package service;
 
 import entities.TiendaEvento;
 import entities.TiendaEventoId;
+import exceptions.CreateException;
+import exceptions.DeleteException;
+import exceptions.ReadException;
+import exceptions.UpdateException;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,11 +30,11 @@ import javax.ws.rs.core.PathSegment;
  * @author David
  */
 @Stateless
-@Path("entities.tiendaevento")
-public class TiendaEventoFacadeREST extends AbstractFacade<TiendaEvento> {
+@Path("entities.tienda_evento")
+public class TiendaEventoFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G4ServerPU")
-    private EntityManager em;
+    @EJB
+    private EJBTiendaEventoInterface ejb;
 
     private TiendaEventoId getPrimaryKey(PathSegment pathSegment) {
         /*
@@ -54,63 +57,38 @@ public class TiendaEventoFacadeREST extends AbstractFacade<TiendaEvento> {
         return key;
     }
 
-    public TiendaEventoFacadeREST() {
-        super(TiendaEvento.class);
-    }
-
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(TiendaEvento entity) {
-        super.create(entity);
+    public void create(TiendaEvento entity) throws CreateException {
+        System.out.println("Creando TiendaEvento --> " + entity.toString());
+        ejb.createTiendaEvento(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, TiendaEvento entity) {
-        super.edit(entity);
+    public void edit(@PathParam("id") PathSegment id, TiendaEvento entity) throws UpdateException {
+        ejb.editTiendaEvento(entity);
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
-        entities.TiendaEventoId key = getPrimaryKey(id);
-        super.remove(super.find(key));
+    @Path("{tienda_id}/{evento_id}")
+    public void remove(@PathParam("tienda_id") Integer tienda_id, @PathParam("evento_id") Integer evento_id) throws DeleteException, ReadException {
+        ejb.deleteTiendaEvento(this.find(tienda_id, evento_id));
     }
 
     @GET
-    @Path("{id}")
+    @Path("{tienda_id}/{evento_id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public TiendaEvento find(@PathParam("id") PathSegment id) {
-        entities.TiendaEventoId key = getPrimaryKey(id);
-        return super.find(key);
+    public TiendaEvento find(@PathParam("tienda_id") Integer tienda_id, @PathParam("evento_id") Integer evento_id) throws ReadException {
+        return ejb.encontrarTiendaEvento(tienda_id, evento_id);
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<TiendaEvento> findAll() {
-        return super.findAll();
+    public List<TiendaEvento> findAll() throws ReadException {
+        System.out.println("FINDALL TIENDA EVENTO");
+        return ejb.encontrarTodosTiendaEvento();
     }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<TiendaEvento> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
 }

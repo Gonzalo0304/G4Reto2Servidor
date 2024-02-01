@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -75,13 +76,16 @@ public class Tienda implements Serializable {
     //@OneToOne(cascade = ALL)
     //@JoinColumn(name = "idCliente", referencedColumnName = "idUsuario")
     //private Cliente cliente;
-    @OneToOne(mappedBy = "tienda", cascade = CascadeType.ALL)
+    //@OneToOne(mappedBy = "tienda", cascade = CascadeType.PERSIST/*, cascade = CascadeType.ALL*/)
+//    @OneToOne
+//    @JoinColumn(name = "idUsuario")
+    @OneToOne(mappedBy = "tienda")
     private Cliente cliente;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "tienda")
     private List<Producto> productos;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tienda")
+    @OneToMany(mappedBy = "tienda")
     private List<TiendaEvento> listaTiendasEvento;
 
     public Integer getIdTienda() {
@@ -186,7 +190,7 @@ public class Tienda implements Serializable {
 
     @Override
     public String toString() {
-        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + ", productos=" + productos + ", listaTiendasEvento=" + listaTiendasEvento + '}';
+        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + ", productos=" + productos + '}';
     }
 
 }
