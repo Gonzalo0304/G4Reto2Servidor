@@ -5,6 +5,8 @@
  */
 package service;
 
+import static encriptation.Hash.hashText;
+import static encriptation.Asimetrico.desencriptar;
 import entities.Cliente;
 import entities.Usuario;
 import entities.TipoVenta;
@@ -43,6 +45,8 @@ public class ClienteFacadeREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cliente cliente) throws CreateException {
+        System.out.println("Llega cliente --> " + cliente.toString());
+        cliente.setPassword(hashText(desencriptar(cliente.getPassword())));
         ci.createCliente(cliente);
     }
 
@@ -50,7 +54,10 @@ public class ClienteFacadeREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") int id, Cliente cliente) throws UpdateException {
-        System.out.println(cliente.toString());
+        System.out.println("Editando cliente --> " + cliente.toString());
+//        System.out.println("Contraseña descifrada " + desencriptar(cliente.getPassword()));
+//        System.out.println("Contraseña haseaa " + hashText(desencriptar(cliente.getPassword())));
+//        cliente.setPassword(hashText(desencriptar(cliente.getPassword())));
         ci.editCliente(cliente);
     }
 

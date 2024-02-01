@@ -5,6 +5,7 @@
  */
 package service;
 
+import entities.Cliente;
 import entities.Tienda;
 import entities.TipoPago;
 import exceptions.CreateException;
@@ -56,6 +57,17 @@ public class EJBTienda implements EJBTiendaInterface {
     @Override
     public void deleteTienda(Tienda tienda) throws DeleteException {
         try {
+            System.out.println("Eliminando la tienda --> " + tienda.toString());
+
+            if (tienda.getCliente() != null) {
+                Cliente c = tienda.getCliente();
+                c.setTienda(null);
+                em.merge(c);
+
+                tienda.setCliente(null);
+                em.merge(tienda);
+            }
+
             em.remove(tienda);
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());

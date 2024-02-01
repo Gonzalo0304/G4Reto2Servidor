@@ -6,7 +6,8 @@
 package service;
 
 import static encriptation.EnvioEmail.enviarEmail;
-import static encriptation.ServerEncriptacion.desencriptar;
+import static encriptation.Hash.hashText;
+import static encriptation.Asimetrico.desencriptar;
 import entities.Usuario;
 import exceptions.CreateException;
 import exceptions.DeleteException;
@@ -112,7 +113,8 @@ public class UsuarioFacadeREST {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario iniciarSesion(@PathParam("correo") String correo, @PathParam("password") String password) throws ReadException {
         String pass = desencriptar(password);
-        Usuario usuario = ejb.iniciarSesion(correo, pass);
+        String passHash = hashText(pass);
+        Usuario usuario = ejb.iniciarSesion(correo, passHash);
         System.out.println(usuario.toString());
         return usuario;
 

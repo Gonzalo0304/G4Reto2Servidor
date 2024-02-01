@@ -55,7 +55,9 @@ public class TiendaFacadeREST {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) throws ReadException, DeleteException {
+        System.out.println(id);
         Tienda tienda = ti.encontrarTiendaId(id);
+        System.out.println("Tienda antes de ser eliminada" + tienda.toString());
         ti.deleteTienda(tienda);
     }
 

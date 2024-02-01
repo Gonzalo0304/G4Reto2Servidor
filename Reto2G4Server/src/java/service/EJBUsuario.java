@@ -40,6 +40,7 @@ public class EJBUsuario implements EJBUsuarioInterface {
     @Override
     public void createCliente(Cliente cliente) throws CreateException {
         try {
+            System.out.println("Creando el siguiente cliente --> " + cliente.toString());
             em.persist(cliente);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
