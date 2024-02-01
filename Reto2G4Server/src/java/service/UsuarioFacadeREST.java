@@ -8,6 +8,7 @@ package service;
 import static encriptation.EnvioEmail.enviarEmail;
 import static encriptation.Hash.hashText;
 import static encriptation.Asimetrico.desencriptar;
+import encriptation.EnvioEmail;
 import entities.Usuario;
 import exceptions.CreateException;
 import exceptions.DeleteException;
@@ -121,19 +122,31 @@ public class UsuarioFacadeREST {
     }
 
     @GET
-    @Path("envioEmail/{correo}")
-    public void envioEmail(@PathParam("correo") String email) throws ReadException {
-        enviarEmail(email);
+    @Path("olvidarPasswd/{correo}")
+    public void olvidarContrasenia(@PathParam("correo") String email) throws ReadException, UpdateException {
+        Usuario u = encontrarUsuarioCorreo(email);
 
-        /*try {
-            if (usuario != null) {
-                usuario.setPassword(enviarEmail(usuario.getCorreo()));
-                edit(usuario.getIdUsuario(), usuario);
+        if (u != null) {
+            String pass = EnvioEmail.generateRandomPassword();
+            u.setPassword(hashText(pass));
+            edit(u.getIdUsuario(), u);
 
-            }
-        } catch (UpdateException ex) {
-            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+            String message = "Ésta es su nueva contraseña: " + pass;
+            //enviarEmail(email, "Nueva contraseña", message);
+        }
     }
 
+    @GET
+    @Path("cambiarPasswd/{correo}/{passwd}")
+    public void cambiarContrasenia(@PathParam("correo") String email, @PathParam("passwd") String passwd) throws ReadException, UpdateException {
+        Usuario u = encontrarUsuarioCorreo(email);
+
+        if (u != null) {
+            u.setPassword(hashText(desencriptar(passwd)));
+            edit(u.getIdUsuario(), u);
+
+            String message = "El cambio de contraseña se ha completado con exito";
+            // enviarEmail(email, "Cambio de contraseña", message);
+        }
+    }
 }

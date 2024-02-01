@@ -121,7 +121,6 @@ public class Producto implements Serializable {
         this.altura = altura;
     }
 
-    @XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -130,7 +129,6 @@ public class Producto implements Serializable {
         this.cliente = cliente;
     }
 
-    @XmlTransient
     public Tienda getTienda() {
         return tienda;
     }
@@ -206,7 +204,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", precio=" + precio + ", talla=" + altura + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", precio=" + precio + ", altura=" + altura + ", material=" + material + ", peso=" + peso + ", fechacreacion=" + fechacreacion + ", cliente=" + cliente + ", tienda=" + tienda + '}';
     }
 
 }

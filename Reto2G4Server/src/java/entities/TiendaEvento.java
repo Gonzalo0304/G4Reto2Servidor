@@ -64,12 +64,10 @@ public class TiendaEvento implements Serializable {
         return tienda;
     }
 
-    @XmlTransient
     public void setTienda(Tienda tienda) {
         this.tienda = tienda;
     }
 
-    @XmlTransient
     public Evento getEvento() {
         return evento;
     }

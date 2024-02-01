@@ -54,7 +54,7 @@ import javax.xml.bind.annotation.XmlTransient;
     ,
 
     @NamedQuery(
-            name = "encontrarTiendaTipoPago", query = "SELECT t FROM Tienda t WHERE tipoPago=:tipoPago"
+            name = "encontrarTiendaTipoPago", query = "SELECT t FROM Tienda t WHERE t.tipoPago=:tipoPago"
     )
 
 })
@@ -190,7 +190,7 @@ public class Tienda implements Serializable {
 
     @Override
     public String toString() {
-        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + ", productos=" + productos + '}';
+        return "Tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoPago=" + tipoPago + ", espacio=" + espacio + ", fechaCreacion=" + fechaCreacion + '}';
     }
 
 }

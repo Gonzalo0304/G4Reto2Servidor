@@ -132,6 +132,7 @@ public class EJBTienda implements EJBTiendaInterface {
     @Override
     public List<Tienda> encontrarTiendaTipoPago(TipoPago tipoPago) throws ReadException {
         List<Tienda> tiendas;
+        System.out.println("Buscando tipoPago --> " + tipoPago);
         try {
             tiendas = em.createNamedQuery("encontrarTiendaTipoPago").setParameter("tipoPago", tipoPago).getResultList();
         } catch (Exception e) {

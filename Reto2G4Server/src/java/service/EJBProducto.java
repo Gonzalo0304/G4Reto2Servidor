@@ -5,7 +5,9 @@
  */
 package service;
 
+import entities.Cliente;
 import entities.Producto;
+import entities.Tienda;
 import exceptions.CreateException;
 import exceptions.DeleteException;
 import exceptions.ReadException;
@@ -49,6 +51,24 @@ public class EJBProducto implements EJBProductoInterface {
     @Override
     public void removeProducto(Producto producto) throws DeleteException {
         try {
+            System.out.println("Eliminando el siguiente producto --> " + producto.toString());
+
+            if (producto.getCliente() != null) {
+                Cliente c = producto.getCliente();
+                List<Producto> productosCliente = c.getProductosCreados();
+                productosCliente.remove(producto);
+                c.setProductosCreados(productosCliente);
+                em.merge(c);
+            }
+
+            if (producto.getTienda() != null) {
+                Tienda t = producto.getTienda();
+                List<Producto> productosTienda = t.getProductos();
+                productosTienda.remove(producto);
+                t.setProductos(productosTienda);
+                em.merge(t);
+            }
+
             producto = em.merge(producto);
             em.remove(producto);
         } catch (Exception e) {

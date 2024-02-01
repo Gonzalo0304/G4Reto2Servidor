@@ -41,6 +41,9 @@ public class ProductoFacadeREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Producto producto) throws CreateException {
+        System.out.println("Creando el siguiente producto --> " + producto.toString());
+        System.out.println("Su cliente --> " + producto.getCliente());
+        System.out.println("Su Tienda --> " + producto.getTienda());
         ejb.createProducto(producto);
     }
 

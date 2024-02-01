@@ -22,7 +22,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnvioEmail {
 
-    public static String enviarEmail(String receptor) {
+    public static String enviarEmail(String receptor, String subject, String message) {
         final String ZOHO_HOST = "smtp.zoho.eu";
         final String TLS_PORT = "897";
 
@@ -44,20 +44,12 @@ public class EnvioEmail {
         String cadena = "";
 
         try {
-            String caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-
-            for (int x = 0; x < 8; x++) {
-                int indiceAleatorio = numeroAleatorioEnRango(0, caracteres.length() - 1);
-                char caracterAleatorio = caracteres.charAt(indiceAleatorio);
-                cadena += caracterAleatorio;
-            }
-
             final MimeMessage msg = new MimeMessage(session);
 
             msg.setFrom(new InternetAddress(correo));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor, false));
-            msg.setSubject("Nueva Contraseña");
-            msg.setText("Ésta es su nueva contraseña: \n" + cadena, "utf-8", "html");
+            msg.setSubject(subject);
+            msg.setText(message, "utf-8", "html");
             msg.setSentDate(new Date());
 
             Transport transport = session.getTransport("smtps");
@@ -72,7 +64,19 @@ public class EnvioEmail {
         return cadena;
     }
 
-    public static int numeroAleatorioEnRango(int minimo, int maximo) {
+    public static String generateRandomPassword() {
+        String caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        String cadena = "";
+
+        for (int x = 0; x < 8; x++) {
+            int indiceAleatorio = numeroAleatorioEnRango(0, caracteres.length() - 1);
+            char caracterAleatorio = caracteres.charAt(indiceAleatorio);
+            cadena += caracterAleatorio;
+        }
+        return cadena;
+    }
+
+    private static int numeroAleatorioEnRango(int minimo, int maximo) {
         // nextInt regresa en rango pero con límite superior exclusivo, por eso sumamos 1
         return ThreadLocalRandom.current().nextInt(minimo, maximo + 1);
     }
