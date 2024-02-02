@@ -28,6 +28,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+ * Clase que representa una tienda en MarketMaker. Cada instancia de esta clase
+ * corresponde a una tienda específica con atributos como nombre, descripción,
+ * tipo de pago, espacio, fecha de creación, etc.
+ *
+ *
  * @author David
  */
 @Entity

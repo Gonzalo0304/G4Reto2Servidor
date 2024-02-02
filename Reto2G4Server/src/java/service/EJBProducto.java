@@ -19,6 +19,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
+ * EJB para la gestión de productos. Proporciona métodos para realizar
+ * operaciones CRUD en la entidad Producto.
+ *
+ *
  * @author Gonzalo
  */
 @Stateless

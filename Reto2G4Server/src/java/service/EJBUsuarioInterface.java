@@ -17,6 +17,16 @@ import java.util.List;
 
 /**
  *
+ * Esta interfaz define operaciones CRUD y consultas específicas para gestionar
+ * usuarios, clientes y administradores en el sistema.
+ *
+ * Las operaciones CRUD incluyen la creación, lectura, actualización y
+ * eliminación de entidades relacionadas con usuarios.
+ *
+ * Además, proporciona métodos específicos para realizar consultas relacionadas
+ * con la autenticación, búsqueda por ID, correo electrónico, nombre, tipo de
+ * venta y el número de eventos asociados.
+ *
  * @author David
  */
 public interface EJBUsuarioInterface {

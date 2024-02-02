@@ -19,6 +19,8 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
+ * Interfaz que define las operaciones CRUD para la entidad Tienda.
+ *
  * @author David
  */
 @Stateless

@@ -10,6 +10,10 @@ import javax.persistence.Embeddable;
 
 /**
  *
+ * Clase que representa la clave primaria compuesta para la entidad
+ * TiendaEvento. Esta clase se utiliza para almacenar los identificadores de la
+ * tienda y el evento que forman la clave primaria de la relación TiendaEvento.
+ *
  * @author David
  */
 @Embeddable

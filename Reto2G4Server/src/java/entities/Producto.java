@@ -23,6 +23,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+ * Clase que representa un producto en MarketMaker. Cada instancia de esta clase
+ * corresponde a un producto específico con atributos como nombre, precio,
+ * altura, material, peso, etc.
+ *
+ *
  * @author Gonzalo
  */
 @Entity

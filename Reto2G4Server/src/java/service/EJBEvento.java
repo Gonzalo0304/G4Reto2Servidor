@@ -17,6 +17,9 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
+ * EJB para la gestión de eventos. Proporciona operaciones CRUD para la entidad
+ * Evento.
+ *
  * @author Iñigo
  */
 @Stateless

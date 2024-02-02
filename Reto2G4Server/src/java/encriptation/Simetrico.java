@@ -20,13 +20,26 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * Clase para realizar operaciones de encriptación y desencriptación simétrica
+ * utilizando AES en modo CBC. Los datos confidenciales se almacenan en un
+ * archivo cifrado.
+ *
+ * @author David
+ */
 public class Simetrico {
 
     private static byte[] salt = "esta es la salt!".getBytes();
 
     private static String rutaFichero = System.getProperty("user.home") + File.separator + "Documents\\MarketMaker\\credenciales.dat";
 
-    // Este metodo va ha leer el fichero .dat y sacar el gmail y la contraseña
+    /**
+     * Desencripta el texto almacenado en el archivo cifrado utilizando la clave
+     * proporcionada.
+     *
+     * @param clave Clave para desencriptar el texto.
+     * @return Texto desencriptado.
+     */
     public static String descifrarTexto(String clave) {
         String ret = null;
 
@@ -54,7 +67,12 @@ public class Simetrico {
         return ret;
     }
 
-    // Lee el fichero de configuracion y lo devuelve como array de bytes
+    /**
+     * Lee el contenido de un archivo y lo devuelve como un array de bytes.
+     *
+     * @param path Ruta del archivo.
+     * @return Contenido del archivo como un array de bytes.
+     */
     private static byte[] fileReader(String path) {
         byte ret[] = null;
         File file = new File(path);

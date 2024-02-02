@@ -26,6 +26,13 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
+ * Clase que expone servicios RESTful para la entidad Tienda. Permite realizar
+ * operaciones CRUD (Create, Read, Update, Delete) sobre los datos de Tienda.
+ * Los métodos de esta clase gestionan las solicitudes HTTP y llaman a los
+ * métodos correspondientes en la interfaz EJBTiendaInterface. La ruta base para
+ * estos servicios es "entities.tienda".
+ *
+ *
  * @author David
  */
 @Stateless

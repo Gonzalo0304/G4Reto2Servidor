@@ -29,6 +29,10 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
+ * Servicio RESTful para la entidad Cliente. Proporciona operaciones CRUD para
+ * la gestión de clientes. Utiliza anotaciones JAX-RS para definir las rutas y
+ * métodos HTTP.
+ *
  * @author David
  */
 @Stateless

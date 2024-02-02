@@ -12,7 +12,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Jason.
+ * EJB que implementa la interfaz EJBTiendaEventoInterface para realizar
+ * operaciones CRUD relacionadas con la entidad TiendaEvento.
+ *
+ * @author Iñigo y David
  */
 @Stateless
 public class EJBTiendaEvento implements EJBTiendaEventoInterface {

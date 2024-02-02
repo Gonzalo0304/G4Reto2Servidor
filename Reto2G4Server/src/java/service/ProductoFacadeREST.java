@@ -25,6 +25,11 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
+ * Servicio REST para operaciones CRUD en la entidad Producto. Las operaciones
+ * incluyen crear, editar, eliminar y recuperar productos.
+ *
+ * @author Gonzalo
+ *
  * @author Gonzalo
  */
 @Stateless

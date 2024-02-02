@@ -9,7 +9,13 @@ import java.util.List;
 
 /**
  *
- * @author Jason.
+ * Interfaz que define operaciones CRUD para la entidad TiendaEvento.
+ * Proporciona métodos para crear, actualizar, eliminar y recuperar asociaciones
+ * entre tiendas y eventos. Además, incluye operaciones para buscar una
+ * asociación específica por sus IDs y obtener todas las asociaciones.
+ *
+ *
+ * @author Iñigo y David
  */
 public interface EJBTiendaEventoInterface {
 

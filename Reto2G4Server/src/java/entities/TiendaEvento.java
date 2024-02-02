@@ -21,6 +21,12 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+ * Clase que representa la relación entre una tienda y un evento en MarketMaker.
+ * Cada instancia de esta clase asocia una tienda a un evento con una fecha de
+ * inscripción. La clave primaria está compuesta por los identificadores de la
+ * tienda y el evento.
+ *
+ *
  * @author David
  */
 @Entity

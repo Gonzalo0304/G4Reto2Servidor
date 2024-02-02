@@ -16,6 +16,14 @@ import java.util.List;
 
 /**
  *
+ * Interfaz que define operaciones CRUD para la entidad Tienda. Proporciona
+ * métodos para crear, actualizar, eliminar y recuperar información sobre
+ * tiendas. Además, incluye operaciones para buscar una tienda específica por su
+ * ID, obtener todas las tiendas, buscar tiendas con un espacio menor, mayor o
+ * entre un rango específico, y encontrar tiendas por tipo de pago.
+ *
+ *
+ *
  * @author David
  */
 public interface EJBTiendaInterface {

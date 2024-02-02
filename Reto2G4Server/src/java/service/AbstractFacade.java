@@ -10,6 +10,13 @@ import javax.persistence.EntityManager;
 
 /**
  *
+ * Clase abstracta que sirve como base para los facades en un patrón de diseño
+ * DAO (Data Access Object). Proporciona métodos para realizar operaciones CRUD
+ * (Create, Read, Update, Delete) en entidades.
+ *
+ * @param <T> Tipo de entidad que manejará el facade.
+ * @author David
+ *
  * @author David
  */
 public abstract class AbstractFacade<T> {
@@ -60,5 +67,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

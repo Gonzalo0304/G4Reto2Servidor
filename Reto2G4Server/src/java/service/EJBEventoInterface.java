@@ -15,6 +15,9 @@ import java.util.List;
 
 /**
  *
+ * Interfaz para la gestión de eventos. Proporciona métodos para realizar
+ * operaciones CRUD en la entidad Evento.
+ *
  * @author Iñigo
  */
 public interface EJBEventoInterface {

@@ -14,6 +14,8 @@ import java.util.List;
 
 /**
  *
+ * Interfaz que define las operaciones CRUD para la entidad Producto.
+ *
  * @author Gonzalo
  */
 public interface EJBProductoInterface {

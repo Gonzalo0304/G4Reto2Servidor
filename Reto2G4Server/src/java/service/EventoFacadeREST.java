@@ -24,8 +24,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
+ * Clase que expone servicios RESTful para la entidad Evento. Permite realizar
+ * operaciones CRUD (Create, Read, Update, Delete) sobre los datos de Evento.
+ * Los métodos de esta clase gestionan las solicitudes HTTP y llaman a los
+ * métodos correspondientes en la interfaz EJBTEventoInterface. La ruta base
+ * para estos servicios es "entities.evento".
  *
- * @author David
+ * @author Iñigo
  */
 @Stateless
 @Path("entities.evento")

@@ -27,6 +27,13 @@ import javax.ws.rs.core.PathSegment;
 
 /**
  *
+ * Clase que expone servicios RESTful para la entidad TiendaEvento. Permite
+ * realizar operaciones CRUD (Create, Read, Update, Delete) sobre los datos de
+ * TiendaEvento. Los métodos de esta clase gestionan las solicitudes HTTP y
+ * llaman a los métodos correspondientes en la interfaz
+ * EJBTiendaEventoInterface. La ruta base para estos servicios es
+ * "entities.tienda_evento".
+ *
  * @author David
  */
 @Stateless

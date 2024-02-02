@@ -20,6 +20,13 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
+ * Interfaz que define operaciones CRUD y consultas para la entidad Usuario.
+ * Proporciona métodos para crear, actualizar, eliminar y recuperar información
+ * sobre usuarios. Además, incluye operaciones específicas para encontrar
+ * usuarios por correo, ID, tipo de venta, nombre, número de eventos, y para
+ * iniciar sesión. La interfaz también ofrece métodos para gestionar clientes y
+ * administradores.
+ *
  * @author David
  */
 @Stateless
